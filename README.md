@@ -2,6 +2,23 @@
 
 An interactive full-stack web application exploring all **38 provinces of Indonesia**, built with a **React + Vite + Leaflet** frontend and a **Supabase** backend (PostgreSQL database, Row Level Security, Storage bucket, Auth, and Edge Function Admin API).
 
+## Screenshots
+
+### Interactive Map — Light Theme (English)
+![IndonesiaKu Map — Light Theme](docs/screenshots/map-light.png)
+
+### Interactive Map — Dark Theme & Sidebar (Bahasa Indonesia)
+![IndonesiaKu Map — Dark Theme & Bahasa Indonesia](docs/screenshots/map-dark-id.png)
+
+### Interactive Map — Cartoon Theme
+![IndonesiaKu Map — Cartoon Theme](docs/screenshots/map-cartoon.png)
+
+### Province Details, Live OpenStreetMap Minimap & Curated Photo Gallery
+![Province Detail Popup & Photo Gallery](docs/screenshots/province-popup-gallery.png)
+
+### Capital Video Player Popup
+![Capital Video Player Popup](docs/screenshots/capital-video-popup.png)
+
 ## Features
 
 - **Interactive Map (`/`)**: Full-bleed Leaflet map with GeoJSON province boundaries, population-scaled island-group markers, debounced search, island-group filter chips, sidebar province selection (highlights and previews details without moving the map), bilingual `EN | ID` language switcher, and 3 themes (`light` soft pale-orange, high-contrast `dark`, and `cartoon`) with crisp `20px` background grids and atomic, flicker-free theme transitions.
@@ -17,6 +34,13 @@ An interactive full-stack web application exploring all **38 provinces of Indone
 IndonesiaKu/
   README.md
   .gitignore
+  docs/
+    screenshots/
+      map-light.png
+      map-dark-id.png
+      map-cartoon.png
+      province-popup-gallery.png
+      capital-video-popup.png
   scripts/
     seed-descriptions.mjs
     curate-scenic-photos.mjs
