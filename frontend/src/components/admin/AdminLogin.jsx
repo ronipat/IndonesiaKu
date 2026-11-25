@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLanguage } from '../../lib/i18n.js';
 import { signInAdmin } from '../../services/adminService.js';
 
 export default function AdminLogin({
@@ -8,6 +9,7 @@ export default function AdminLogin({
   onSignOut,
   onOpenSetup,
 }) {
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -44,28 +46,26 @@ export default function AdminLogin({
     return (
       <div className="admin-auth-wrap">
         <section className="admin-auth-card">
-          <span className="gallery-pill">Access Required</span>
-          <h2>Account Not Authorized as Admin</h2>
+          <span className="gallery-pill">{t('login.accessRequired')}</span>
+          <h2>{t('login.notAuthorizedTitle')}</h2>
           <p className="admin-auth-sub">
-            Signed in as <strong>{sessionState.user.email}</strong> (UID:{' '}
-            <code>{sessionState.user.id}</code>), which is not listed in{' '}
-            <code>public.admin_users</code> yet.
+            {t('login.signedInAs')} <strong>{sessionState.user.email}</strong> (UID:{' '}
+            <code>{sessionState.user.id}</code>), {t('login.notListed')}{' '}
+            <code>public.admin_users</code> {t('login.yet')}
           </p>
 
-          <p className="admin-auth-sub">
-            Run this SQL snippet in your Supabase SQL Editor to grant admin access:
-          </p>
+          <p className="admin-auth-sub">{t('login.runSql')}</p>
           <pre className="setup-code">{sqlSnippet}</pre>
 
           <div className="admin-auth-actions">
             <button type="button" className="admin-btn admin-btn-secondary" onClick={handleCopy}>
-              {copied ? 'Copied SQL!' : 'Copy SQL'}
+              {copied ? t('login.copiedSql') : t('login.copySql')}
             </button>
             <button type="button" className="admin-btn admin-btn-primary" onClick={onRecheck}>
-              Recheck Access
+              {t('login.recheckAccess')}
             </button>
             <button type="button" className="admin-btn admin-btn-ghost" onClick={onSignOut}>
-              Sign Out
+              {t('admin.signOut')}
             </button>
           </div>
         </section>
@@ -77,11 +77,8 @@ export default function AdminLogin({
     <div className="admin-auth-wrap">
       <section className="admin-auth-card">
         <span className="gallery-pill">IndonesiaKu CMS</span>
-        <h2>Admin Sign In</h2>
-        <p className="admin-auth-sub">
-          Sign in with your Supabase Auth admin account to maintain province descriptions and
-          galleries.
-        </p>
+        <h2>{t('login.signInTitle')}</h2>
+        <p className="admin-auth-sub">{t('login.signInSub')}</p>
 
         {error && (
           <div className="admin-alert admin-alert-error" role="alert">
@@ -91,7 +88,7 @@ export default function AdminLogin({
 
         <form onSubmit={handleSubmit} className="admin-auth-form">
           <label className="admin-field">
-            <span>Email</span>
+            <span>{t('login.email')}</span>
             <input
               type="email"
               required
@@ -102,7 +99,7 @@ export default function AdminLogin({
             />
           </label>
           <label className="admin-field">
-            <span>Password</span>
+            <span>{t('login.password')}</span>
             <input
               type="password"
               required
@@ -117,13 +114,13 @@ export default function AdminLogin({
             className="admin-btn admin-btn-primary admin-btn-full"
             disabled={submitting}
           >
-            {submitting ? 'Signing in...' : 'Sign In'}
+            {submitting ? t('login.signingIn') : t('login.signInBtn')}
           </button>
         </form>
 
         <div className="admin-auth-footer">
           <button type="button" className="admin-link-btn" onClick={onOpenSetup}>
-            Need to configure Supabase admin_users? View setup guide
+            {t('login.setupLink')}
           </button>
         </div>
       </section>

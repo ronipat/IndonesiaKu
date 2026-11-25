@@ -187,6 +187,7 @@ export async function updateProvince(id, payload) {
     area_km2: Math.max(0, Math.round(Number(payload.area_km2 || 0))),
     population: Math.max(0, Math.round(Number(payload.population || 0))),
     description: String(payload.description || ''),
+    description_id: String(payload.description_id || ''),
     audio_url: payload.audio_url ? String(payload.audio_url).trim() : null,
     video_url: payload.video_url ? String(payload.video_url).trim() : null,
   };
@@ -572,6 +573,7 @@ export function resetDemoData() {
   writeDemoProvinces(
     defaultProvinces.map((p) => ({
       ...p,
+      description_id: p.description_id || '',
       audio_url: p.audio_url || null,
       video_url: p.video_url || null,
     }))

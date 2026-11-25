@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../lib/i18n.js';
 
 export default function Sidebar({
   provinces,
@@ -19,6 +20,7 @@ export default function Sidebar({
   onTogglePin,
   onOpenSetup,
 }) {
+  const { t, translateIsland } = useLanguage();
   const totalProvinces = islands.reduce((sum, item) => sum + item.province_count, 0);
 
   const density =
@@ -30,12 +32,12 @@ export default function Sidebar({
 
   const statusLabel =
     backendStatus === 'online'
-      ? 'Supabase Live'
+      ? t('sidebar.statusLive')
       : backendStatus === 'demo'
-        ? 'Demo Mode'
+        ? t('sidebar.statusDemo')
         : backendStatus === 'offline'
-          ? 'DB Offline'
-          : 'Connecting';
+          ? t('sidebar.statusOffline')
+          : t('sidebar.statusConnecting');
 
   return (
     <aside className="sidebar">
@@ -45,7 +47,9 @@ export default function Sidebar({
             <h1>
               Indonesia<span className="text-brand-gradient">Ku</span>
             </h1>
-            <p className="subtitle">{totalProvinces || provinces.length} Provinces</p>
+            <p className="subtitle">
+              {t('sidebar.provincesCount', { count: totalProvinces || provinces.length })}
+            </p>
           </div>
           <div className="header-actions">
             {backendStatus === 'demo' ? (
@@ -53,7 +57,7 @@ export default function Sidebar({
                 type="button"
                 className="status-badge status-demo status-clickable"
                 onClick={onOpenSetup}
-                title="Click for Supabase setup instructions"
+                title={t('sidebar.statusDemoTitle')}
               >
                 <span className="status-dot" />
                 {statusLabel}
@@ -61,7 +65,7 @@ export default function Sidebar({
             ) : (
               <span
                 className={`status-badge status-${backendStatus}`}
-                title="Supabase database connection status"
+                title={t('sidebar.statusLiveTitle')}
               >
                 <span className="status-dot" />
                 {statusLabel}
@@ -70,17 +74,17 @@ export default function Sidebar({
             <Link
               to="/admin"
               className="sidebar-admin-link"
-              title="Open Admin CMS"
-              aria-label="Open Admin CMS"
+              title={t('map.openAdminTitle')}
+              aria-label={t('map.openAdminTitle')}
             >
-              Admin
+              {t('map.admin')}
             </Link>
             <button
               type="button"
               className={`pin-btn ${pinned ? 'active' : ''}`}
               onClick={onTogglePin}
-              title={pinned ? 'Unpin menu' : 'Pin menu open'}
-              aria-label={pinned ? 'Unpin menu' : 'Pin menu open'}
+              title={pinned ? t('sidebar.unpinMenu') : t('sidebar.pinMenu')}
+              aria-label={pinned ? t('sidebar.unpinMenu') : t('sidebar.pinMenu')}
             >
               📌
             </button>
@@ -107,15 +111,15 @@ export default function Sidebar({
             type="text"
             value={searchInput}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search province or capital..."
-            aria-label="Search province or capital"
+            placeholder={t('sidebar.searchPlaceholder')}
+            aria-label={t('sidebar.searchAria')}
           />
           {searchInput && (
             <button
               type="button"
               className="clear-input-btn"
               onClick={() => onSearchChange('')}
-              aria-label="Clear search"
+              aria-label={t('sidebar.clearSearch')}
             >
               ×
             </button>
@@ -125,30 +129,30 @@ export default function Sidebar({
 
       {error && (
         <div className="error-banner" role="alert">
-          <div className="error-title">Supabase unreachable</div>
+          <div className="error-title">{t('sidebar.errorTitle')}</div>
           <p>{error}</p>
           <p className="error-hint">
-            Check <code>frontend/.env</code> keys and ensure your Supabase SQL migrations ran.
+            {t('sidebar.errorHintPre')} <code>frontend/.env</code> {t('sidebar.errorHintPost')}
           </p>
           <div className="error-actions">
             <button type="button" className="retry-btn" onClick={onRetry}>
-              Retry Connection
+              {t('sidebar.retryConnection')}
             </button>
             <button type="button" className="setup-link-btn" onClick={onOpenSetup}>
-              Setup Guide
+              {t('sidebar.setupGuide')}
             </button>
           </div>
         </div>
       )}
 
       {islands.length > 0 && (
-        <section className="island-filters" aria-label="Filter by island group">
+        <section className="island-filters" aria-label={t('sidebar.islandFiltersAria')}>
           <button
             type="button"
             className={`island-chip ${selectedIsland === '' ? 'active' : ''}`}
             onClick={() => onSelectIsland('')}
           >
-            <span>All</span>
+            <span>{t('sidebar.all')}</span>
             <span className="chip-count">{totalProvinces}</span>
           </button>
           {islands.map((group) => {
@@ -162,7 +166,7 @@ export default function Sidebar({
                 onClick={() => onSelectIsland(active ? '' : group.name)}
               >
                 <span className="chip-dot" style={{ backgroundColor: color }} />
-                <span>{group.name}</span>
+                <span>{translateIsland(group.name)}</span>
                 <span className="chip-count">{group.province_count}</span>
               </button>
             );
@@ -175,7 +179,7 @@ export default function Sidebar({
           {detailLoading && !selectedProvince ? (
             <div className="detail-loading" role="status" aria-live="polite">
               <div className="map-spinner map-spinner-sm" aria-hidden="true" />
-              <span>Loading province details...</span>
+              <span>{t('sidebar.loadingDetails')}</span>
             </div>
           ) : (
             selectedProvince && (
@@ -186,7 +190,7 @@ export default function Sidebar({
                       className="detail-island-tag"
                       style={{ backgroundColor: islandColors[selectedProvince.island] || '#0284c7' }}
                     >
-                      {selectedProvince.island}
+                      {translateIsland(selectedProvince.island)}
                     </span>
                     <h2>{selectedProvince.name}</h2>
                   </div>
@@ -194,7 +198,7 @@ export default function Sidebar({
                     type="button"
                     className="detail-close-btn"
                     onClick={onClearSelection}
-                    aria-label="Close province details"
+                    aria-label={t('sidebar.closeDetails')}
                   >
                     ×
                   </button>
@@ -202,19 +206,19 @@ export default function Sidebar({
 
                 <dl className="detail-stats">
                   <div className="stat-item">
-                    <dt>Capital</dt>
+                    <dt>{t('sidebar.capital')}</dt>
                     <dd>{selectedProvince.capital}</dd>
                   </div>
                   <div className="stat-item">
-                    <dt>Population</dt>
+                    <dt>{t('sidebar.population')}</dt>
                     <dd>{Number(selectedProvince.population || 0).toLocaleString('id-ID')}</dd>
                   </div>
                   <div className="stat-item">
-                    <dt>Area</dt>
+                    <dt>{t('sidebar.area')}</dt>
                     <dd>{Number(selectedProvince.area_km2 || 0).toLocaleString('id-ID')} km²</dd>
                   </div>
                   <div className="stat-item">
-                    <dt>Density</dt>
+                    <dt>{t('sidebar.density')}</dt>
                     <dd>{density} / km²</dd>
                   </div>
                 </dl>
@@ -225,13 +229,13 @@ export default function Sidebar({
       )}
 
       <div className="list-header">
-        <span>Provinces</span>
-        <span className="list-count">{provinces.length} shown</span>
+        <span>{t('sidebar.listTitle')}</span>
+        <span className="list-count">{t('sidebar.listCount', { count: provinces.length })}</span>
       </div>
 
       <ul className="province-list">
         {provinces.length === 0 && !error ? (
-          <li className="empty-list">No provinces match your filter.</li>
+          <li className="empty-list">{t('sidebar.emptyList')}</li>
         ) : (
           provinces.map((province) => {
             const isSelected = selectedProvince?.id === province.id;
@@ -241,18 +245,19 @@ export default function Sidebar({
                 <button
                   type="button"
                   className={`province-item ${isSelected ? 'selected' : ''}`}
-                  onClick={() => onSelectProvince(province.id, { fly: true, openPopup: false })}
-                  title="Click to locate on map"
+                  onClick={() => onSelectProvince(province.id, { fly: false, openPopup: false })}
+                  title={t('sidebar.locateTitle')}
                 >
                   <span className="province-dot" style={{ backgroundColor: color }} />
                   <div className="province-item-text">
                     <div className="province-name">{province.name}</div>
                     <div className="province-meta">
-                      {province.capital} · {province.island}
+                      {province.capital} · {translateIsland(province.island)}
                     </div>
                   </div>
                   <div className="province-pop">
-                    {(Number(province.population || 0) / 1_000_000).toFixed(1)}M
+                    {(Number(province.population || 0) / 1_000_000).toFixed(1)}
+                    {t('sidebar.popMillion')}
                   </div>
                 </button>
               </li>

@@ -220,6 +220,7 @@ Deno.serve(async (req: Request) => {
       const areaKm2 = Math.max(0, Math.round(Number(body.area_km2 || 0)));
       const population = Math.max(0, Math.round(Number(body.population || 0)));
       const description = String(body.description || '').trim();
+      const descriptionId = body.description_id ? String(body.description_id).trim() : null;
       const audioUrl = body.audio_url ? String(body.audio_url).trim() : null;
       const videoUrl = body.video_url ? String(body.video_url).trim() : null;
 
@@ -242,6 +243,7 @@ Deno.serve(async (req: Request) => {
           area_km2: areaKm2,
           population,
           description,
+          description_id: descriptionId,
           audio_url: audioUrl,
           video_url: videoUrl,
         })
@@ -468,6 +470,9 @@ Deno.serve(async (req: Request) => {
           updates.population = Math.max(0, Math.round(Number(body.population)));
         }
         if (body.description !== undefined) updates.description = String(body.description);
+        if (body.description_id !== undefined) {
+          updates.description_id = body.description_id ? String(body.description_id) : null;
+        }
         if (body.audio_url !== undefined) {
           updates.audio_url = body.audio_url ? String(body.audio_url).trim() : null;
         }

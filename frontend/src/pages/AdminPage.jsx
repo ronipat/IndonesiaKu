@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../lib/i18n.js';
 import { isSupabaseConfigured, useAdminEdgeFunction } from '../lib/supabase.js';
 import { getAdminSession, signOutAdmin } from '../services/adminService.js';
 import SupabaseSetupModal from '../components/SupabaseSetupModal.jsx';
@@ -7,6 +8,7 @@ import AdminDashboard from '../components/admin/AdminDashboard.jsx';
 import AdminLogin from '../components/admin/AdminLogin.jsx';
 
 export default function AdminPage({ theme, onToggleTheme }) {
+  const { lang, setLang, t } = useLanguage();
   const [sessionState, setSessionState] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -40,10 +42,10 @@ export default function AdminPage({ theme, onToggleTheme }) {
   };
 
   const modeBadgeLabel = !isSupabaseConfigured
-    ? 'Demo Mode'
+    ? t('admin.badgeDemo')
     : useAdminEdgeFunction
-      ? 'Edge API Live'
-      : 'Supabase Live';
+      ? t('admin.badgeEdge')
+      : t('admin.badgeLive');
 
   return (
     <div className="admin-shell">
@@ -53,7 +55,7 @@ export default function AdminPage({ theme, onToggleTheme }) {
             <Link to="/" className="admin-brand">
               Indonesia<span className="text-brand-gradient">Ku</span>
             </Link>
-            <span className="admin-brand-tag">Admin</span>
+            <span className="admin-brand-tag">{t('map.admin')}</span>
           </div>
           <span
             className={`status-badge ${isSupabaseConfigured ? 'status-online' : 'status-demo'}`}
@@ -70,18 +72,38 @@ export default function AdminPage({ theme, onToggleTheme }) {
               className="admin-btn admin-btn-secondary admin-btn-sm"
               onClick={() => setSetupOpen(true)}
             >
-              Supabase Setup
+              {t('admin.setupBtn')}
             </button>
           )}
+          <div className="lang-toggle lang-toggle-sm" role="group" aria-label={t('lang.label')}>
+            <button
+              type="button"
+              className={`lang-toggle-btn ${lang === 'en' ? 'active' : ''}`}
+              onClick={() => setLang('en')}
+              aria-pressed={lang === 'en'}
+              title={t('lang.switchToEn')}
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              className={`lang-toggle-btn ${lang === 'id' ? 'active' : ''}`}
+              onClick={() => setLang('id')}
+              aria-pressed={lang === 'id'}
+              title={t('lang.switchToId')}
+            >
+              ID
+            </button>
+          </div>
           <Link to="/" className="admin-btn admin-btn-secondary admin-btn-sm">
-            View Map
+            {t('admin.viewMap')}
           </Link>
           <button
             type="button"
             className="theme-toggle"
             onClick={onToggleTheme}
-            aria-label="Cycle theme"
-            title={`Current theme: ${theme} (click to switch)`}
+            aria-label={t('admin.cycleTheme')}
+            title={t('admin.themeTitle', { theme })}
           >
             {theme === 'cartoon' ? '🎨' : theme === 'dark' ? '🌙' : '☀️'}
           </button>
@@ -91,7 +113,7 @@ export default function AdminPage({ theme, onToggleTheme }) {
               className="admin-btn admin-btn-ghost admin-btn-sm"
               onClick={handleSignOut}
             >
-              Sign Out
+              {t('admin.signOut')}
             </button>
           )}
         </div>
@@ -109,7 +131,7 @@ export default function AdminPage({ theme, onToggleTheme }) {
             <div className="map-move-loader-badge">
               <div className="map-spinner map-spinner-sm" aria-hidden="true" />
             </div>
-            <p className="map-loading-text">Checking admin session...</p>
+            <p className="map-loading-text">{t('admin.checkingSession')}</p>
           </div>
         ) : sessionState?.isAdmin ? (
           <AdminDashboard onOpenSetup={() => setSetupOpen(true)} />

@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLanguage } from '../lib/i18n.js';
 import { parseVideoSource } from '../utils/videoUrl.js';
 
 const VIDEO_AUTOPLAY_DELAY_MS = 5000;
 
 export default function CapitalVideoPopup({ province, islandColor, onClose }) {
+  const { t, translateIsland } = useLanguage();
   const [mediaError, setMediaError] = useState(false);
   const [readyToPlay, setReadyToPlay] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(
@@ -88,10 +90,12 @@ export default function CapitalVideoPopup({ province, islandColor, onClose }) {
             className="detail-island-tag"
             style={{ backgroundColor: islandColor || '#E56A4A' }}
           >
-            {province.island}
+            {translateIsland(province.island)}
           </span>
           <h2 id="capital-video-title">{province.capital}</h2>
-          <span className="video-popup-sub">· Capital of {province.name}</span>
+          <span className="video-popup-sub">
+            {t('video.capitalOf', { name: province.name })}
+          </span>
           {parsed.provider && (
             <span className="video-provider-badge">{parsed.provider}</span>
           )}
@@ -100,7 +104,7 @@ export default function CapitalVideoPopup({ province, islandColor, onClose }) {
           type="button"
           className="detail-close-btn"
           onClick={onClose}
-          aria-label="Close capital video player"
+          aria-label={t('video.closeAria')}
         >
           ×
         </button>
@@ -110,22 +114,18 @@ export default function CapitalVideoPopup({ province, islandColor, onClose }) {
         {parsed.kind === 'empty' ? (
           <div className="video-empty-state">
             <p className="video-empty-title">
-              No video configured yet for {province.capital}.
+              {t('video.emptyTitle', { capital: province.capital })}
             </p>
-            <p className="video-empty-hint">
-              Add a video link (YouTube, Vimeo, or MP4) in the Admin page.
-            </p>
+            <p className="video-empty-hint">{t('video.emptyHint')}</p>
           </div>
         ) : parsed.kind === 'invalid' || mediaError ? (
           <div className="video-empty-state">
             <p className="video-empty-title">
               {mediaError
-                ? `Unable to play video directly for ${province.capital}.`
-                : 'Invalid video link configured.'}
+                ? t('video.errorTitle', { capital: province.capital })
+                : t('video.invalidTitle')}
             </p>
-            <p className="video-empty-hint">
-              Update the Capital Video URL in Admin with a YouTube, Vimeo, Google Drive, or direct MP4 link.
-            </p>
+            <p className="video-empty-hint">{t('video.invalidHint')}</p>
             {canOpenExternal && (
               <a
                 href={parsed.originalUrl}
@@ -133,7 +133,7 @@ export default function CapitalVideoPopup({ province, islandColor, onClose }) {
                 rel="noopener noreferrer"
                 className="video-external-link"
               >
-                Open Video Link ↗
+                {t('video.openLink')}
               </a>
             )}
           </div>
@@ -143,14 +143,14 @@ export default function CapitalVideoPopup({ province, islandColor, onClose }) {
               <div className="map-spinner map-spinner-sm" aria-hidden="true" />
             </div>
             <p className="video-countdown-text">
-              Starting video in {secondsLeft}s...
+              {t('video.startingIn', { seconds: secondsLeft })}
             </p>
             <button
               type="button"
               className="video-play-now-btn"
               onClick={handlePlayNow}
             >
-              Play Now
+              {t('video.playNow')}
             </button>
           </div>
         ) : parsed.kind === 'iframe' ? (
@@ -186,7 +186,7 @@ export default function CapitalVideoPopup({ province, islandColor, onClose }) {
             rel="noopener noreferrer"
             className="video-external-link"
           >
-            Open Original ↗
+            {t('video.openOriginal')}
           </a>
         )}
       </div>

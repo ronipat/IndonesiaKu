@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useLanguage } from '../lib/i18n.js';
 import { ISLAND_COLORS } from '../lib/geoMappings.js';
 import {
   checkHealth,
@@ -15,6 +16,7 @@ import Sidebar from '../components/Sidebar.jsx';
 import SupabaseSetupModal from '../components/SupabaseSetupModal.jsx';
 
 export default function MapPage({ theme, onToggleTheme }) {
+  const { t } = useLanguage();
   const [provinces, setProvinces] = useState([]);
   const [islands, setIslands] = useState([]);
   const [geojson, setGeojson] = useState(null);
@@ -221,8 +223,8 @@ export default function MapPage({ theme, onToggleTheme }) {
           type="button"
           className="sidebar-handle"
           onClick={() => setSidebarPinned((p) => !p)}
-          title={sidebarPinned ? 'Unpin menu' : 'Pin menu open'}
-          aria-label="Toggle menu"
+          title={sidebarPinned ? t('sidebar.unpinMenu') : t('sidebar.pinMenu')}
+          aria-label={t('sidebar.toggleMenu')}
         >
           {sidebarPinned ? '‹' : '☰'}
         </button>

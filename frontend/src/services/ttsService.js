@@ -31,6 +31,14 @@ const PREFERRED_FEMALE_VOICES = [
   'google us english',
 ];
 
+const PREFERRED_INDONESIAN_VOICES = [
+  'gadis',
+  'damayanti',
+  'google bahasa indonesia',
+  'siri',
+  'indonesian',
+];
+
 const LEGACY_ROBOTIC_OR_MALE_VOICES = [
   'zira',
   'david',
@@ -86,7 +94,22 @@ export function waitForVoices(timeoutMs = 1200) {
   });
 }
 
-function scoreVoice(voice) {
+function isIndonesianVoice(voice) {
+  const name = String(voice?.name || '').toLowerCase();
+  const lang = String(voice?.lang || '').toLowerCase();
+  return (
+    lang.startsWith('id') ||
+    /\bindonesia(n)?\b|\bgadis\b|\bardi\b|\bdamayanti\b|\bbahasa indonesia\b/i.test(name)
+  );
+}
+
+function isMalayVoice(voice) {
+  const name = String(voice?.name || '').toLowerCase();
+  const lang = String(voice?.lang || '').toLowerCase();
+  return lang.startsWith('ms') || /\bmalay\b|\byasmin\b|\bosman\b/i.test(name);
+}
+
+function scoreEnglishVoice(voice) {
   const name = String(voice?.name || '').toLowerCase();
   const lang = String(voice?.lang || '').toLowerCase();
   let score = 0;
@@ -109,15 +132,64 @@ function scoreVoice(voice) {
   return score;
 }
 
-export function pickBestHdVoice(voices) {
+function scoreIndonesianVoice(voice) {
+  const name = String(voice?.name || '').toLowerCase();
+  const lang = String(voice?.lang || '').toLowerCase();
+  let score = 0;
+
+  if (HD_VOICE_KEYWORDS.some((kw) => name.includes(kw))) {
+    score += 140;
+  }
+  if (!voice?.localService) {
+    score += 65;
+  }
+  if (PREFERRED_INDONESIAN_VOICES.some((hint) => name.includes(hint))) {
+    score += 45;
+  }
+  if (/\bgadis\b|\bdamayanti\b/i.test(name)) {
+    score += 25;
+  } else if (/\bardi\b/i.test(name)) {
+    score += 10;
+  }
+  if (lang === 'id-id' || lang === 'id_id') {
+    score += 20;
+  } else if (lang.startsWith('id')) {
+    score += 12;
+  }
+  if (/\b(espeak|compact)\b/i.test(name)) {
+    score -= 60;
+  }
+  return score;
+}
+
+export function pickBestHdVoice(voices, lang = 'en') {
   if (!Array.isArray(voices) || voices.length === 0) return null;
+
+  const isIndonesian = String(lang || 'en').toLowerCase().startsWith('id');
+  if (isIndonesian) {
+    const idVoices = voices.filter(isIndonesianVoice);
+    const msVoices = idVoices.length === 0 ? voices.filter(isMalayVoice) : [];
+    const pool = idVoices.length > 0 ? idVoices : msVoices.length > 0 ? msVoices : voices;
+
+    let best = pool[0];
+    let bestScore = -Infinity;
+    for (const voice of pool) {
+      const s = scoreIndonesianVoice(voice);
+      if (s > bestScore) {
+        bestScore = s;
+        best = voice;
+      }
+    }
+    return best || null;
+  }
+
   const enVoices = voices.filter((v) => String(v?.lang || '').toLowerCase().startsWith('en'));
   const pool = enVoices.length > 0 ? enVoices : voices;
 
   let best = pool[0];
   let bestScore = -Infinity;
   for (const voice of pool) {
-    const s = scoreVoice(voice);
+    const s = scoreEnglishVoice(voice);
     if (s > bestScore) {
       bestScore = s;
       best = voice;
@@ -138,7 +210,7 @@ export function stopSpeech() {
 }
 
 export async function speakTextHd(text, callbacks = {}) {
-  const { onStart, onEnd, onError, onVoiceSelected } = callbacks;
+  const { lang = 'en', onStart, onEnd, onError, onVoiceSelected } = callbacks;
   if (!isTtsSupported()) {
     onVoiceSelected?.('');
     onError?.(new Error('Speech synthesis is unavailable'));
@@ -160,7 +232,10 @@ export async function speakTextHd(text, callbacks = {}) {
     return;
   }
 
-  const chosenVoice = pickBestHdVoice(voices);
+  const isIndonesian = String(lang || 'en').toLowerCase().startsWith('id');
+  const chosenVoice = pickBestHdVoice(voices, lang);
+  const chosenLooksIndonesian = chosenVoice ? isIndonesianVoice(chosenVoice) : false;
+
   onVoiceSelected?.(chosenVoice?.name || '');
 
   const rawSentences = cleanText.match(/[^.!?]+[.!?]+|[^.!?]+$/g);
@@ -182,12 +257,21 @@ export async function speakTextHd(text, callbacks = {}) {
     }
 
     const utterance = new SpeechSynthesisUtterance(sentences[index]);
-    utterance.lang = chosenVoice?.lang || 'en-US';
-    if (chosenVoice) {
-      utterance.voice = chosenVoice;
+    if (isIndonesian) {
+      utterance.lang = chosenLooksIndonesian ? chosenVoice.lang || 'id-ID' : 'id-ID';
+      if (chosenVoice && (chosenLooksIndonesian || isMalayVoice(chosenVoice))) {
+        utterance.voice = chosenVoice;
+      }
+      utterance.pitch = 1.0;
+      utterance.rate = 0.96;
+    } else {
+      utterance.lang = chosenVoice?.lang || 'en-US';
+      if (chosenVoice) {
+        utterance.voice = chosenVoice;
+      }
+      utterance.pitch = 1.0;
+      utterance.rate = 0.95;
     }
-    utterance.pitch = 1.0;
-    utterance.rate = 0.95;
     utterance.volume = 1.0;
 
     utterance.onstart = () => {

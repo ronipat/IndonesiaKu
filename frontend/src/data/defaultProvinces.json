@@ -8,7 +8,8 @@
     "lng": 95.32,
     "area_km2": 57956,
     "population": 5482500,
-    "description": "Situated at the northern tip of Sumatra, Aceh is known as Serambi Mekkah (Veranda of Mecca) for its deep Islamic heritage and resilient history. Its capital, Banda Aceh, anchors a coastline framed by the Baiturrahman Grand Mosque, Tsunami Museum, and the coral reefs of Sabang on Weh Island. Inland, the Leuser Ecosystem shelters Sumatran orangutans and tigers, while the Gayo Highlands produce prized single-origin Arabica coffee alongside rich culinary staples such as Mie Aceh and Ayam Tangkap."
+    "description": "Situated at the northern tip of Sumatra, Aceh is known as Serambi Mekkah (Veranda of Mecca) for its deep Islamic heritage and resilient history. Its capital, Banda Aceh, anchors a coastline framed by the Baiturrahman Grand Mosque, Tsunami Museum, and the coral reefs of Sabang on Weh Island. Inland, the Leuser Ecosystem shelters Sumatran orangutans and tigers, while the Gayo Highlands produce prized single-origin Arabica coffee alongside rich culinary staples such as Mie Aceh and Ayam Tangkap.",
+    "description_id": "Berada di ujung utara Pulau Sumatra, Aceh dikenal sebagai Serambi Mekkah karena warisan Islam dan sejarah ketangguhannya yang mendalam. Ibu kotanya, Banda Aceh, memayungi pesisir indah dengan ikon Masjid Raya Baiturrahman, Museum Tsunami, serta terumbu karang Sabang di Pulau Weh. Di pedalaman, Ekosistem Leuser melindungi orangutan dan harimau sumatra, sementara Dataran Tinggi Gayo menghasilkan kopi arabika kelas dunia bersama kuliner khas seperti Mie Aceh dan Ayam Tangkap."
   },
   {
     "id": "sumatera-utara",
@@ -19,7 +20,8 @@
     "lng": 98.6722,
     "area_km2": 72981,
     "population": 15386600,
-    "description": "Sumatera Utara stretches from the Strait of Malacca across the volcanic Bukit Barisan mountains to the Indian Ocean, centered around the bustling metropolis of Medan. The province is home to Lake Toba, the world’s largest volcanic caldera lake, and cultural Samosir Island, heartland of Batak heritage, traditional ulos weaving, and stone-carved villages. Visitors also explore Gunung Leuser National Park’s rainforests, Sipiso-piso Waterfall, and Medan’s renowned culinary scene featuring Bika Ambon and Soto Medan."
+    "description": "Sumatera Utara stretches from the Strait of Malacca across the volcanic Bukit Barisan mountains to the Indian Ocean, centered around the bustling metropolis of Medan. The province is home to Lake Toba, the world’s largest volcanic caldera lake, and cultural Samosir Island, heartland of Batak heritage, traditional ulos weaving, and stone-carved villages. Visitors also explore Gunung Leuser National Park’s rainforests, Sipiso-piso Waterfall, and Medan’s renowned culinary scene featuring Bika Ambon and Soto Medan.",
+    "description_id": "Sumatera Utara membentang dari Selat Malaka melintasi pegunungan vulkanik Bukit Barisan hingga Samudra Hindia, dengan pusat kota metropolitan Medan. Provinsi ini menjadi rumah bagi Danau Toba sebagai danau kaldera vulkanik terbesar di dunia, serta Pulau Samosir yang menjadi jantung budaya Batak, tenun ulos, dan kampung adat bersejarah. Pengunjung juga dapat menjelajahi hutan hujan Taman Nasional Gunung Leuser, Air Terjun Sipiso-piso, serta ragam kuliner Medan seperti Bika Ambon dan Soto Medan."
   },
   {
     "id": "sumatera-barat",
@@ -30,7 +32,8 @@
     "lng": 100.4172,
     "area_km2": 42013,
     "population": 5757200,
-    "description": "Set along western Sumatra’s dramatic coast and highland valleys, Sumatera Barat is the ancestral homeland of the matrilineal Minangkabau people, governed from Padang. Iconic curved-roof Rumah Gadang architecture dots scenic Bukittinggi, Sianok Canyon, and the turquoise volcanic lakes of Maninjau and Singkarak, while the Mentawai Islands attract surfers worldwide. Globally celebrated for Padang cuisine—especially Rendang, Sate Padang, and Dendeng Balado—the province blends spice-rich culinary craft with living adat traditions and vibrant coastal landscapes."
+    "description": "Set along western Sumatra’s dramatic coast and highland valleys, Sumatera Barat is the ancestral homeland of the matrilineal Minangkabau people, governed from Padang. Iconic curved-roof Rumah Gadang architecture dots scenic Bukittinggi, Sianok Canyon, and the turquoise volcanic lakes of Maninjau and Singkarak, while the Mentawai Islands attract surfers worldwide. Globally celebrated for Padang cuisine—especially Rendang, Sate Padang, and Dendeng Balado—the province blends spice-rich culinary craft with living adat traditions and vibrant coastal landscapes.",
+    "description_id": "Terletak di sepanjang pesisir barat Sumatra dan lembah dataran tinggi yang dramatis, Sumatera Barat merupakan tanah kelahiran masyarakat matrilineal Minangkabau dengan ibu kota Padang. Atap gonjong Rumah Gadang yang ikonik menghiasi Bukittinggi, Ngarai Sianok, serta danau vulkanik Maninjau dan Singkarak, sementara Kepulauan Mentawai terkenal di kalangan peselancar dunia. Mendunia berkat masakan Padang seperti Rendang, Sate Padang, dan Dendeng Balado, provinsi ini memadukan kekayaan kuliner rempah dengan adat istiadat yang lestari."
   },
   {
     "id": "riau",
@@ -41,7 +44,8 @@
     "lng": 101.4478,
     "area_km2": 87024,
     "population": 6642900,
-    "description": "Lying along Sumatra’s central eastern lowlands and major river arteries such as the Siak and Kampar, Riau serves as an energy, palm-oil, and Malay cultural hub centered in Pekanbaru. Historic landmarks include the Muara Takus Buddhist temple complex, Siak Sri Indrapura Palace, and traditional Malay poetry and zapin dance traditions. Along the Kampar River, the famous Bono tidal bore creates miles-long river waves, while coastal estuaries and peatland parks sustain rich riverine fisheries and wildlife."
+    "description": "Lying along Sumatra’s central eastern lowlands and major river arteries such as the Siak and Kampar, Riau serves as an energy, palm-oil, and Malay cultural hub centered in Pekanbaru. Historic landmarks include the Muara Takus Buddhist temple complex, Siak Sri Indrapura Palace, and traditional Malay poetry and zapin dance traditions. Along the Kampar River, the famous Bono tidal bore creates miles-long river waves, while coastal estuaries and peatland parks sustain rich riverine fisheries and wildlife.",
+    "description_id": "Terbentang di dataran rendah timur Sumatra bagian tengah serta dialiri sungai besar seperti Sungai Siak dan Sungai Kampar, Riau menjadi pusat energi, perkebunan, dan budaya Melayu dengan ibu kota Pekanbaru. Situs bersejarah meliputi kompleks Candi Muara Takus, Istana Siak Sri Indrapura, serta tradisi sastra pantun dan tari zapin Melayu. Di Sungai Kampar, fenomena gelombang pasang Bono menghadirkan ombak sungai unik yang panjang, sementara muara pesisir dan hutan rawa gambut menjaga keanekaragaman hayati sungai."
   },
   {
     "id": "kepulauan-riau",
@@ -52,7 +56,8 @@
     "lng": 104.4665,
     "area_km2": 8202,
     "population": 2150300,
-    "description": "Spanning more than 2,400 islands across the South China Sea and Malacca Strait gateways, Kepulauan Riau is governed from historic Tanjung Pinang on Bintan Island. Its archipelago merges maritime trade corridors and Batam’s industrial ports with serene white-sand resorts, Penyengat Island’s royal Malay heritage, and granite-boulder beaches in Natuna and Anambas. Fresh seafood dishes like Gonggong sea snails and Mie Lendir reflect a lively seafaring culture linking Sumatra, Singapore, and Borneo."
+    "description": "Spanning more than 2,400 islands across the South China Sea and Malacca Strait gateways, Kepulauan Riau is governed from historic Tanjung Pinang on Bintan Island. Its archipelago merges maritime trade corridors and Batam’s industrial ports with serene white-sand resorts, Penyengat Island’s royal Malay heritage, and granite-boulder beaches in Natuna and Anambas. Fresh seafood dishes like Gonggong sea snails and Mie Lendir reflect a lively seafaring culture linking Sumatra, Singapore, and Borneo.",
+    "description_id": "Mencakup lebih dari 2.400 pulau di perairan Laut Natuna dan gerbang Selat Malaka, Kepulauan Riau beribu kota di Tanjung Pinang di Pulau Bintan. Kepulauan ini memadukan jalur perdagangan maritim serta kawasan industri Batam dengan pantai berpasir putih, peninggalan Kesultanan Melayu di Pulau Penyengat, dan panorama batu granit di Natuna serta Anambas. Hidangan laut segar seperti Gonggong dan Mie Lendir mencerminkan budaya bahari yang menghubungkan Sumatra, Singapura, dan Kalimantan."
   },
   {
     "id": "jambi",
@@ -63,7 +68,8 @@
     "lng": 103.6131,
     "area_km2": 50058,
     "population": 3679200,
-    "description": "Bisected by Sumatra’s longest river, the Batanghari, Jambi extends from eastern peat coasts to the towering volcanic peaks of Kerinci Seblat National Park around its capital, Jambi City. The province safeguards the sprawling Muaro Jambi temple compound—one of Southeast Asia’s largest ancient brick Buddhist sites—alongside Mount Kerinci, Indonesia’s highest active volcano. Rich tea plantations, Lake Gunung Tujuh, and traditional Tempoyak fermented durian dishes highlight Jambi’s blend of highland wilderness and river heritage."
+    "description": "Bisected by Sumatra’s longest river, the Batanghari, Jambi extends from eastern peat coasts to the towering volcanic peaks of Kerinci Seblat National Park around its capital, Jambi City. The province safeguards the sprawling Muaro Jambi temple compound—one of Southeast Asia’s largest ancient brick Buddhist sites—alongside Mount Kerinci, Indonesia’s highest active volcano. Rich tea plantations, Lake Gunung Tujuh, and traditional Tempoyak fermented durian dishes highlight Jambi’s blend of highland wilderness and river heritage.",
+    "description_id": "Dibelah oleh sungai terpanjang di Sumatra, yaitu Sungai Batanghari, Jambi membentang dari pesisir timur hingga puncak vulkanik Taman Nasional Kerinci Seblat dengan ibu kota Kota Jambi. Provinsi ini menjaga kawasan percandian Muaro Jambi sebagai salah satu situs bata Buddha terluas di Asia Tenggara, serta Gunung Kerinci sebagai gunung berapi aktif tertinggi di Indonesia. Kebun teh yang sejuk, Danau Gunung Tujuh, dan sajian khas Tempoyak melengkapi perpaduan alam pegunungan dan warisan sungai."
   },
   {
     "id": "sumatera-selatan",
@@ -74,7 +80,8 @@
     "lng": 104.7754,
     "area_km2": 91592,
     "population": 8743500,
-    "description": "Anchored by Palembang along the wide Musi River, Sumatera Selatan inherits the maritime legacy of the ancient Srivijaya Empire, symbolized by the towering Ampera Bridge and Kemaro Island. Beyond its riverfront markets and Musi delta trade, the province encompasses fertile highland coffee estates around Pagar Alam and Mount Dempo’s volcanic slopes. Palembang’s culinary fame centers on Pempek savory fishcakes served with tangy cuko sauce, songket gold-threaded textiles, and lively river festivals."
+    "description": "Anchored by Palembang along the wide Musi River, Sumatera Selatan inherits the maritime legacy of the ancient Srivijaya Empire, symbolized by the towering Ampera Bridge and Kemaro Island. Beyond its riverfront markets and Musi delta trade, the province encompasses fertile highland coffee estates around Pagar Alam and Mount Dempo’s volcanic slopes. Palembang’s culinary fame centers on Pempek savory fishcakes served with tangy cuko sauce, songket gold-threaded textiles, and lively river festivals.",
+    "description_id": "Berpusat di Palembang di tepian Sungai Musi yang lebar, Sumatera Selatan mewarisi kejayaan maritim Kerajaan Sriwijaya dengan ikon Jembatan Ampera dan Pulau Kemaro. Selain pasar apung dan perdagangan delta Sungai Musi, provinsi ini memiliki kawasan perkebunan kopi dataran tinggi yang subur di Pagar Alam dan lereng Gunung Dempo. Nama Palembang harum dengan kuliner Pempek berkuah cuko yang gurih pedas, kain tenun songket benang emas, serta tradisi festival sungai."
   },
   {
     "id": "kepulauan-bangka-belitung",
@@ -85,7 +92,8 @@
     "lng": 106.1169,
     "area_km2": 16424,
     "population": 1517600,
-    "description": "Located off southeastern Sumatra across the Karimata Strait, Kepulauan Bangka Belitung consists of twin main islands and hundreds of smaller islets administered from Pangkal Pinang. Belitung’s Tanjung Tinggi Beach is famous for towering granite boulders framing crystal-clear turquoise coves, while Bangka’s coastline offers lighthouse islands and historic tin-mining towns. Famous for white pepper plantations, coastal seafood such as Mie Bangka and Lempah Kuning, and serene island-hopping routes, the province blends geological drama with relaxed island life."
+    "description": "Located off southeastern Sumatra across the Karimata Strait, Kepulauan Bangka Belitung consists of twin main islands and hundreds of smaller islets administered from Pangkal Pinang. Belitung’s Tanjung Tinggi Beach is famous for towering granite boulders framing crystal-clear turquoise coves, while Bangka’s coastline offers lighthouse islands and historic tin-mining towns. Famous for white pepper plantations, coastal seafood such as Mie Bangka and Lempah Kuning, and serene island-hopping routes, the province blends geological drama with relaxed island life.",
+    "description_id": "Berada di sebelah tenggara Sumatra melintasi Selat Karimata, Kepulauan Bangka Belitung terdiri atas dua pulau utama dan ratusan pulau kecil dengan ibu kota Pangkal Pinang. Pantai Tanjung Tinggi di Belitung terkenal akan susunan batu granit raksasa yang mengapit teluk biru jernih, sedangkan pesisir Bangka menawarkan pulau mercusuar dan kota bersejarah penghasil timah. Dikenal dengan perkebunan lada putih serta sajian laut seperti Mie Bangka dan Lempah Kuning, provinsi ini memadukan lanskap geologi memukau dengan suasana pulau yang tenang."
   },
   {
     "id": "bengkulu",
@@ -96,7 +104,8 @@
     "lng": 102.2608,
     "area_km2": 19919,
     "population": 2086400,
-    "description": "Facing the open Indian Ocean along Sumatra’s southwestern coast, Bengkulu blends lush Bukit Barisan rainforests with rare colonial heritage centered in Bengkulu City. The province preserves Fort Marlborough—an 18th-century British fortress—alongside the historic residence where Sukarno lived during exile, and is famous as a natural habitat for the giant Rafflesia arnoldii bloom. Coastal beaches like Pantai Panjang, highland tea hills in Kepahiang, and traditional Tabot ceremonies define its distinctive cultural rhythm."
+    "description": "Facing the open Indian Ocean along Sumatra’s southwestern coast, Bengkulu blends lush Bukit Barisan rainforests with rare colonial heritage centered in Bengkulu City. The province preserves Fort Marlborough—an 18th-century British fortress—alongside the historic residence where Sukarno lived during exile, and is famous as a natural habitat for the giant Rafflesia arnoldii bloom. Coastal beaches like Pantai Panjang, highland tea hills in Kepahiang, and traditional Tabot ceremonies define its distinctive cultural rhythm.",
+    "description_id": "Menghadap langsung ke Samudra Hindia di pesisir barat daya Sumatra, Bengkulu memadukan hutan hujan Bukit Barisan dengan peninggalan sejarah kolonial yang berpusat di Kota Bengkulu. Provinsi ini melestarikan Benteng Marlborough dari abad kedelapan belas, rumah pengasingan bersejarah Bung Karno, serta habitat alami bunga raksasa Rafflesia arnoldii. Pantai Panjang yang membentang luas, perbukitan teh di Kepahiang, dan upacara budaya Tabot menjadi ciri khas kehidupan masyarakatnya."
   },
   {
     "id": "lampung",
@@ -107,7 +116,8 @@
     "lng": 105.261,
     "area_km2": 34624,
     "population": 9314000,
-    "description": "Occupying Sumatra’s southern tip overlooking the Sunda Strait, Lampung connects Sumatra and Java through major ferry ports while centering administration in Bandar Lampung. Way Kambas National Park protects wild Sumatran elephants and rhinos, while Kiluan Bay draws visitors for dolphin watching and Krakatau volcano rises nearby in the strait. Known for intricate Tapis gold-embroidered woven cloth, strong Robusta coffee, and Seruit fish dishes, Lampung showcases both coastal vistas and fertile agricultural highlands."
+    "description": "Occupying Sumatra’s southern tip overlooking the Sunda Strait, Lampung connects Sumatra and Java through major ferry ports while centering administration in Bandar Lampung. Way Kambas National Park protects wild Sumatran elephants and rhinos, while Kiluan Bay draws visitors for dolphin watching and Krakatau volcano rises nearby in the strait. Known for intricate Tapis gold-embroidered woven cloth, strong Robusta coffee, and Seruit fish dishes, Lampung showcases both coastal vistas and fertile agricultural highlands.",
+    "description_id": "Menempati ujung selatan Pulau Sumatra yang menghadap Selat Sunda, Lampung menjadi penghubung utama Sumatra dan Jawa melalui pelabuhan penyeberangan dengan pusat pemerintahan di Bandar Lampung. Taman Nasional Way Kambas melindungi gajah dan badak sumatra liar, sementara Teluk Kiluan terkenal dengan lumba-lumba serta kawasan Gunung Anak Krakatau yang menjulang di selat. Terkenal dengan kain Tapis bersulam benang emas, kopi robusta unggulan, dan hidangan ikan Seruit, Lampung kaya akan panorama pantai dan pertanian."
   },
   {
     "id": "dki-jakarta",
@@ -118,7 +128,8 @@
     "lng": 106.8456,
     "area_km2": 664,
     "population": 10672100,
-    "description": "As Indonesia’s historic maritime capital and commercial nerve center on Java’s northwest coast, DKI Jakarta weaves centuries of Betawi, Dutch colonial, and modern cosmopolitan life into a dynamic megacity. Iconic landmarks range from the towering National Monument (Monas) and Istiqlal Mosque to Kota Tua’s heritage squares, Sunda Kelapa harbor, and the coral islets of Kepulauan Seribu. Dynamic arts districts, sprawling malls, and iconic dishes such as Kerak Telor and Soto Betawi capture the city’s fast-paced energy."
+    "description": "As Indonesia’s historic maritime capital and commercial nerve center on Java’s northwest coast, DKI Jakarta weaves centuries of Betawi, Dutch colonial, and modern cosmopolitan life into a dynamic megacity. Iconic landmarks range from the towering National Monument (Monas) and Istiqlal Mosque to Kota Tua’s heritage squares, Sunda Kelapa harbor, and the coral islets of Kepulauan Seribu. Dynamic arts districts, sprawling malls, and iconic dishes such as Kerak Telor and Soto Betawi capture the city’s fast-paced energy.",
+    "description_id": "Sebagai ibu kota bersejarah dan pusat bisnis utama di pesisir barat laut Pulau Jawa, DKI Jakarta memadukan warisan budaya Betawi, sejarah kolonial, dan kehidupan metropolitan modern. Ikon kota mencakup Monumen Nasional, Masjid Istiqlal, kawasan bersejarah Kota Tua, Pelabuhan Sunda Kelapa, hingga gugusan pulau karang di Kepulauan Seribu. Kawasan seni kreatif, pusat perbelanjaan modern, serta kuliner legendaris seperti Kerak Telor dan Soto Betawi menggambarkan denyut kota yang dinamis."
   },
   {
     "id": "jawa-barat",
@@ -129,7 +140,8 @@
     "lng": 107.6191,
     "area_km2": 35378,
     "population": 49860300,
-    "description": "Ringed by misty volcanic highlands and tea plantations, Jawa Barat is Indonesia’s most populous province and the cultural heartland of the Sundanese people, governed from Bandung. Its cool plateaus showcase Tangkuban Perahu crater, Kawah Putih’s sulfur lake, Pangandaran’s coastal reserves, and Bogor’s historic Botanical Gardens. Celebrated for Sundanese angklung bamboo music, vibrant creative industries, and fresh specialties such as Nasi Timbel, Batagor, and Peuyeum, the province balances highland beauty with bustling urban innovation."
+    "description": "Ringed by misty volcanic highlands and tea plantations, Jawa Barat is Indonesia’s most populous province and the cultural heartland of the Sundanese people, governed from Bandung. Its cool plateaus showcase Tangkuban Perahu crater, Kawah Putih’s sulfur lake, Pangandaran’s coastal reserves, and Bogor’s historic Botanical Gardens. Celebrated for Sundanese angklung bamboo music, vibrant creative industries, and fresh specialties such as Nasi Timbel, Batagor, and Peuyeum, the province balances highland beauty with bustling urban innovation.",
+    "description_id": "Dikelilingi dataran tinggi vulkanik yang sejuk dan hamparan kebun teh, Jawa Barat merupakan provinsi berpenduduk terbanyak di Indonesia sekaligus tanah budaya Sunda dengan ibu kota Bandung. Wilayah ini menawarkan kawah Tangkuban Perahu, danau belerang Kawah Putih, cagar alam pesisir Pangandaran, serta Kebun Raya Bogor yang bersejarah. Dikenal luas lewat musik bambu angklung, industri kreatif yang maju, dan kuliner seperti Nasi Timbel, Batagor, serta Peuyeum, Jawa Barat memadukan pesona alam dan inovasi kota."
   },
   {
     "id": "banten",
@@ -140,7 +152,8 @@
     "lng": 106.1503,
     "area_km2": 9663,
     "population": 12307700,
-    "description": "Occupying Java’s westernmost peninsula along the Sunda Strait, Banten pairs thriving industrial corridors around Serang and Tangerang with wild coastlines and living indigenous heritage. Ujung Kulon National Park—a UNESCO World Heritage site—protects the last wild Javan rhinoceroses, while Old Banten’s Great Mosque and royal ruins recall a powerful 16th-century Islamic sultanate. Visitors also explore Sawarna’s surf beaches, Tanjung Lesung, and the secluded Baduy highland communities known for centuries-old ecological traditions."
+    "description": "Occupying Java’s westernmost peninsula along the Sunda Strait, Banten pairs thriving industrial corridors around Serang and Tangerang with wild coastlines and living indigenous heritage. Ujung Kulon National Park—a UNESCO World Heritage site—protects the last wild Javan rhinoceroses, while Old Banten’s Great Mosque and royal ruins recall a powerful 16th-century Islamic sultanate. Visitors also explore Sawarna’s surf beaches, Tanjung Lesung, and the secluded Baduy highland communities known for centuries-old ecological traditions.",
+    "description_id": "Menempati semenanjung paling barat Pulau Jawa di tepi Selat Sunda, Banten memadukan kawasan industri modern di sekitar Serang dan Tangerang dengan pesisir alami serta masyarakat adat yang lestari. Taman Nasional Ujung Kulon sebagai situs Warisan Dunia UNESCO melindungi populasi badak jawa liar terakhir, sementara Masjid Agung Banten Lama dan reruntuhan keraton mengingatkan kejayaan kesultanan Islam abad keenam belas. Pengunjung juga mengenal pantai selancar Sawarna, Tanjung Lesung, serta masyarakat adat Baduy di pedalaman."
   },
   {
     "id": "jawa-tengah",
@@ -151,7 +164,8 @@
     "lng": 110.4167,
     "area_km2": 32801,
     "population": 37541000,
-    "description": "Located in the cultural core of Java and administered from coastal Semarang, Jawa Tengah preserves monumental temple architecture, Javanese court arts, and dramatic volcanic landscapes. The province houses Borobudur, the world’s largest Buddhist monument, alongside the towering Dieng Plateau temples, Karimunjawa’s marine archipelago, and Semarang’s Dutch heritage district of Kota Lama. Deeply rooted in batik craftsmanship, wayang shadow puppetry, and gamelan music, its culinary classics include Lumpia Semarang, Gudeg-influenced stews, and Soto Kudus."
+    "description": "Located in the cultural core of Java and administered from coastal Semarang, Jawa Tengah preserves monumental temple architecture, Javanese court arts, and dramatic volcanic landscapes. The province houses Borobudur, the world’s largest Buddhist monument, alongside the towering Dieng Plateau temples, Karimunjawa’s marine archipelago, and Semarang’s Dutch heritage district of Kota Lama. Deeply rooted in batik craftsmanship, wayang shadow puppetry, and gamelan music, its culinary classics include Lumpia Semarang, Gudeg-influenced stews, and Soto Kudus.",
+    "description_id": "Terletak di jantung budaya Pulau Jawa dengan ibu kota pesisir Semarang, Jawa Tengah melestarikan arsitektur candi megah, seni keraton Jawa, dan lanskap gunung berapi yang menawan. Provinsi ini menyimpan Candi Borobudur sebagai monumen Buddha terbesar di dunia, kompleks Candi Dieng di dataran tinggi, kepulauan bahari Karimunjawa, serta kawasan bersejarah Kota Lama Semarang. Berakar kuat pada seni batik, wayang kulit, dan gamelan, sajian terkenalnya meliputi Lumpia Semarang dan Soto Kudus."
   },
   {
     "id": "di-yogyakarta",
@@ -162,7 +176,8 @@
     "lng": 110.3695,
     "area_km2": 3133,
     "population": 3736500,
-    "description": "A special autonomous region led by a reigning Sultan in Yogyakarta, DI Yogyakarta serves as Java’s preeminent center of classical court culture, education, and fine arts. Iconic treasures include the royal Kraton palace, Prambanan’s soaring Hindu spires, Malioboro’s bustling craft promenade, and the volcanic cone of Mount Merapi to the north. From hand-drawn batik and silverwork in Kotagede to black-sand southern beaches and sweet-savory Gudeg jackfruit stew, the province radiates timeless Javanese elegance."
+    "description": "A special autonomous region led by a reigning Sultan in Yogyakarta, DI Yogyakarta serves as Java’s preeminent center of classical court culture, education, and fine arts. Iconic treasures include the royal Kraton palace, Prambanan’s soaring Hindu spires, Malioboro’s bustling craft promenade, and the volcanic cone of Mount Merapi to the north. From hand-drawn batik and silverwork in Kotagede to black-sand southern beaches and sweet-savory Gudeg jackfruit stew, the province radiates timeless Javanese elegance.",
+    "description_id": "Sebagai daerah istimewa yang dipimpin langsung oleh Sultan di Yogyakarta, DI Yogyakarta menjadi pusat utama kebudayaan keraton, pendidikan, dan seni rupa di Pulau Jawa. Kekayaan budayanya tampak pada Keraton Yogyakarta, kemegahan Candi Prambanan, kawasan belanja seni Malioboro, dan kegagahan Gunung Merapi di sebelah utara. Dari batik tulis dan kerajinan perak Kotagede hingga pantai selatan dan kuliner legendaris Gudeg, provinsi ini memancarkan keanggunan tradisi Jawa yang hidup."
   },
   {
     "id": "jawa-timur",
@@ -173,7 +188,8 @@
     "lng": 112.7521,
     "area_km2": 47800,
     "population": 41528000,
-    "description": "Spanning eastern Java and Madura Island from its port capital of Surabaya, Jawa Timur boasts some of Indonesia’s most dramatic volcanic scenery and ancient Majapahit heritage. Sunrise views over Mount Bromo’s sea of sand, the electric-blue sulfur flames of Kawah Ijen, and lush waterfalls such as Tumpak Sewu draw travelers year-round. Known for Surabaya’s heroic history, Madurese bull races, bold East Javanese dishes like Rawon and Rujak Cingur, and vibrant coastal trade, it blends rugged nature with industrial strength."
+    "description": "Spanning eastern Java and Madura Island from its port capital of Surabaya, Jawa Timur boasts some of Indonesia’s most dramatic volcanic scenery and ancient Majapahit heritage. Sunrise views over Mount Bromo’s sea of sand, the electric-blue sulfur flames of Kawah Ijen, and lush waterfalls such as Tumpak Sewu draw travelers year-round. Known for Surabaya’s heroic history, Madurese bull races, bold East Javanese dishes like Rawon and Rujak Cingur, and vibrant coastal trade, it blends rugged nature with industrial strength.",
+    "description_id": "Membentang di ujung timur Pulau Jawa dan Pulau Madura dengan kota pelabuhan utama Surabaya, Jawa Timur memiliki panorama vulkanik paling dramatis sekaligus jejak sejarah Kerajaan Majapahit. Pemandangan matahari terbit di lautan pasir Gunung Bromo, api biru belerang Kawah Ijen, dan kemegahan Air Terjun Tumpak Sewu menjadi daya tarik utama wisatawan. Dikenal dengan sejarah kepahlawanan Surabaya, tradisi karapan sapi Madura, serta kuliner khas seperti Rawon dan Rujak Cingur, provinsi ini memadukan alam liar dan kekuatan ekonomi."
   },
   {
     "id": "bali",
@@ -184,7 +200,8 @@
     "lng": 115.2126,
     "area_km2": 5780,
     "population": 4404300,
-    "description": "Known worldwide as the Island of the Gods, Bali pairs vibrant Hindu-Balinese spirituality with terraced emerald landscapes and coastal cliffs surrounding its capital, Denpasar. UNESCO-listed Subak rice terraces in Jatiluwih, cliffside Uluwatu Temple, Lake Bratan’s water shrines, and Ubud’s dance and painting studios embody living ceremonial life. From world-class surf breaks and Nusa Penida’s limestone coves to aromatic Babi Guling, Lawar, and gamelan ensembles, Bali offers unmatched cultural depth and natural charm."
+    "description": "Known worldwide as the Island of the Gods, Bali pairs vibrant Hindu-Balinese spirituality with terraced emerald landscapes and coastal cliffs surrounding its capital, Denpasar. UNESCO-listed Subak rice terraces in Jatiluwih, cliffside Uluwatu Temple, Lake Bratan’s water shrines, and Ubud’s dance and painting studios embody living ceremonial life. From world-class surf breaks and Nusa Penida’s limestone coves to aromatic Babi Guling, Lawar, and gamelan ensembles, Bali offers unmatched cultural depth and natural charm.",
+    "description_id": "Dijuluki sebagai Pulau Dewata, Bali memadukan spiritualitas Hindu-Bali yang kental dengan lanskap terasering sawah hijau dan tebing pantai indah di sekitar ibu kota Denpasar. Sistem irigasi Subak yang diakui UNESCO di Jatiluwih, Pura Uluwatu di tepi tebing, Pura Ulun Danu Beratan, serta sanggar seni dan tari Ubud menghidupkan tradisi setiap hari. Dari ombak selancar kelas dunia dan keindahan Nusa Penida hingga kuliner khas seperti Ayam Betutu dan Lawar, Bali menyuguhkan pesona budaya dan alam yang tak tertandingi."
   },
   {
     "id": "nusa-tenggara-barat",
@@ -195,7 +212,8 @@
     "lng": 116.1167,
     "area_km2": 18572,
     "population": 5560300,
-    "description": "Stretching across Lombok and Sumbawa islands east of Bali, Nusa Tenggara Barat blends Sasak and Samawa traditions around its capital, Mataram. Towering Mount Rinjani shelters the volcanic Lake Segara Anak, while the car-free Gili Islands, Kuta Mandalika’s sweeping bays, and Sumbawa’s Moyo Island offer pristine coral reefs and world-class surf. Hand-woven songket textiles, spicy Ayam Taliwang and Plecing Kangkung, and wild horse pastures in Sumbawa give the province an adventurous, uncrowded character."
+    "description": "Stretching across Lombok and Sumbawa islands east of Bali, Nusa Tenggara Barat blends Sasak and Samawa traditions around its capital, Mataram. Towering Mount Rinjani shelters the volcanic Lake Segara Anak, while the car-free Gili Islands, Kuta Mandalika’s sweeping bays, and Sumbawa’s Moyo Island offer pristine coral reefs and world-class surf. Hand-woven songket textiles, spicy Ayam Taliwang and Plecing Kangkung, and wild horse pastures in Sumbawa give the province an adventurous, uncrowded character.",
+    "description_id": "Membentang di Pulau Lombok dan Pulau Sumbawa di sebelah timur Bali, Nusa Tenggara Barat memadukan tradisi masyarakat Sasak dan Samawa dengan ibu kota Mataram. Gunung Rinjani yang menjulang melindungi Danau Segara Anak yang indah, sementara tiga Pulau Gili bebas kendaraan, Teluk Mandalika, dan Pulau Moyo di Sumbawa menghadirkan terumbu karang jernih dan ombak berselancar. Kain songket tenun tangan, kuliner pedas Ayam Taliwang dan Plecing Kangkung, serta padang sabana Sumbawa memberi karakter petualangan yang khas."
   },
   {
     "id": "nusa-tenggara-timur",
@@ -206,7 +224,8 @@
     "lng": 123.607,
     "area_km2": 48718,
     "population": 5569100,
-    "description": "Encompassing more than 500 rugged islands across eastern Indonesia—including Flores, Sumba, and West Timor—Nusa Tenggara Timur is governed from Kupang. The province protects the legendary Komodo dragons of Komodo National Park, the tri-colored volcanic crater lakes of Kelimutu, Padar Island’s ridges, and traditional megalithic villages in Sumba. Renowned for intricate hand-dyed ikat weaving, savannas studded with lontar palms, and crystal-clear diving waters in Alor and Labuan Bajo, NTT offers dramatic frontier beauty."
+    "description": "Encompassing more than 500 rugged islands across eastern Indonesia—including Flores, Sumba, and West Timor—Nusa Tenggara Timur is governed from Kupang. The province protects the legendary Komodo dragons of Komodo National Park, the tri-colored volcanic crater lakes of Kelimutu, Padar Island’s ridges, and traditional megalithic villages in Sumba. Renowned for intricate hand-dyed ikat weaving, savannas studded with lontar palms, and crystal-clear diving waters in Alor and Labuan Bajo, NTT offers dramatic frontier beauty.",
+    "description_id": "Melingkupi lebih dari lima ratus pulau eksotis di kawasan timur Indonesia, termasuk Flores, Sumba, dan Timor Barat, Nusa Tenggara Timur dipimpin dari kota pantai Kupang. Provinsi ini menjadi habitat komodo purba di Taman Nasional Komodo, danau kawah tiga warna Kelimutu, perbukitan Pulau Padar, serta kampung adat megalitik di Sumba. Terkenal akan tenun ikat yang kaya makna, sabana berpohon lontar, serta taman laut kelas dunia di Alor dan Labuan Bajo, NTT menyajikan keindahan alam yang memukau."
   },
   {
     "id": "kalimantan-barat",
@@ -217,7 +236,8 @@
     "lng": 109.3425,
     "area_km2": 147307,
     "population": 5623300,
-    "description": "Straddling the equator along Borneo’s western coast and governed from Pontianak, Kalimantan Barat is shaped by the mighty Kapuas—Indonesia’s longest river—and sweeping tropical rainforests. Pontianak’s Equator Monument marks zero degrees latitude, while inland lakes in Danau Sentarum National Park and Betung Kerihun safeguard rare orangutan habitats and Dayak longhouses. Rich Chinese-Indonesian, Malay, and Dayak traditions shine through Singkawang’s Cap Go Meh festival, woven rattan crafts, and riverfront culinary specialties."
+    "description": "Straddling the equator along Borneo’s western coast and governed from Pontianak, Kalimantan Barat is shaped by the mighty Kapuas—Indonesia’s longest river—and sweeping tropical rainforests. Pontianak’s Equator Monument marks zero degrees latitude, while inland lakes in Danau Sentarum National Park and Betung Kerihun safeguard rare orangutan habitats and Dayak longhouses. Rich Chinese-Indonesian, Malay, and Dayak traditions shine through Singkawang’s Cap Go Meh festival, woven rattan crafts, and riverfront culinary specialties.",
+    "description_id": "Membentang tepat di garis khatulistiwa di pesisir barat Pulau Kalimantan dengan ibu kota Pontianak, Kalimantan Barat dibentuk oleh Sungai Kapuas sebagai sungai terpanjang di Indonesia dan hutan hujan tropis yang luas. Tugu Khatulistiwa di Pontianak menandai lintang nol derajat, sementara Taman Nasional Danau Sentarum dan Betung Kerihun melindungi habitat orangutan serta rumah betang Dayak. Keberagaman tradisi Melayu, Dayak, dan Tionghoa tampak meriah dalam perayaan Cap Go Meh di Singkawang serta kuliner khas tepian sungai."
   },
   {
     "id": "kalimantan-tengah",
@@ -228,7 +248,8 @@
     "lng": 113.9108,
     "area_km2": 153565,
     "population": 2773700,
-    "description": "Covering vast peat-swamp forests and winding blackwater rivers in southern Borneo, Kalimantan Tengah is centered in the spacious, tree-lined capital of Palangka Raya. Tanjung Puting National Park is famous worldwide for klotok riverboat journeys through wild orangutan, proboscis monkey, and hornbill sanctuaries, alongside Sebangau’s peatland biodiversity. Deeply anchored in Dayak Ngaju philosophy, sacred Sandung memorials, and river-focused livelihoods, the province highlights the vital ecological wealth of Borneo’s rainforest heartland."
+    "description": "Covering vast peat-swamp forests and winding blackwater rivers in southern Borneo, Kalimantan Tengah is centered in the spacious, tree-lined capital of Palangka Raya. Tanjung Puting National Park is famous worldwide for klotok riverboat journeys through wild orangutan, proboscis monkey, and hornbill sanctuaries, alongside Sebangau’s peatland biodiversity. Deeply anchored in Dayak Ngaju philosophy, sacred Sandung memorials, and river-focused livelihoods, the province highlights the vital ecological wealth of Borneo’s rainforest heartland.",
+    "description_id": "Menutupi hamparan hutan rawa gambut yang luas dan sungai-sungai berair gelap di bagian selatan Kalimantan, Kalimantan Tengah berpusat di kota Palangka Raya yang tertata asri. Taman Nasional Tanjung Puting terkenal di mancanegara dengan wisata susur sungai menggunakan perahu klotok untuk melihat orangutan, bekantan, dan burung enggang liar, bersanding dengan Taman Nasional Sebangau. Berakar kuat pada falsafah Dayak Ngaju, monumen suci Sandung, dan kehidupan sungai, provinsi ini menjaga paru-paru hijau Kalimantan."
   },
   {
     "id": "kalimantan-selatan",
@@ -239,7 +260,8 @@
     "lng": 114.83,
     "area_km2": 38744,
     "population": 4222300,
-    "description": "Situated at Borneo’s southeastern corner and administered from Banjarbaru alongside historic port city Banjarmasin, Kalimantan Selatan is famed as the \"Land of a Thousand Rivers.\" Dawn boat traders still gather at Lok Baintan’s vibrant floating markets, while the Meratus Mountains offer bamboo rafting, waterfalls, and indigenous Dayak Meratus villages. Known for Martapura’s diamond-polishing markets, shimmering Sasirangan tie-dyed cloth, and hearty Soto Banjar soup, the province blends river commerce with highland adventure."
+    "description": "Situated at Borneo’s southeastern corner and administered from Banjarbaru alongside historic port city Banjarmasin, Kalimantan Selatan is famed as the \"Land of a Thousand Rivers.\" Dawn boat traders still gather at Lok Baintan’s vibrant floating markets, while the Meratus Mountains offer bamboo rafting, waterfalls, and indigenous Dayak Meratus villages. Known for Martapura’s diamond-polishing markets, shimmering Sasirangan tie-dyed cloth, and hearty Soto Banjar soup, the province blends river commerce with highland adventure.",
+    "description_id": "Terletak di sudut tenggara Pulau Kalimantan dengan pusat pemerintahan di Banjarbaru yang berdampingan dengan kota pelabuhan bersejarah Banjarmasin, Kalimantan Selatan dikenal sebagai Bumi Seribu Sungai. Pasar Terapung Lok Baintan tetap hidup saat fajar dengan perahu pedagang tradisional, sementara Pegunungan Meratus menawarkan arung jeram bambu dan perkampungan adat Dayak Meratus. Dikenal lewat pusat pengasahan intan Martapura, kain Sasirangan, dan hidangan hangat Soto Banjar, provinsi ini menyatukan perdagangan sungai dan pesona pegunungan."
   },
   {
     "id": "kalimantan-timur",
@@ -250,7 +272,8 @@
     "lng": 117.1536,
     "area_km2": 129067,
     "population": 3909700,
-    "description": "Stretching along Borneo’s eastern coast from Samarinda and port hub Balikpapan, Kalimantan Timur combines rich energy resources with extraordinary rainforest and marine sanctuaries—and hosts the site of Indonesia’s future capital, Nusantara. Offshore, the Derawan Archipelago and Maratua Island shelter green sea turtles, stingless jellyfish lakes on Kakaban, and vibrant coral walls, while Kutai and Mahakam wetlands harbor rare freshwater Irrawaddy dolphins. Traditional Dayak Kenyah woodcarvings and riverine cuisine enrich this dynamic province."
+    "description": "Stretching along Borneo’s eastern coast from Samarinda and port hub Balikpapan, Kalimantan Timur combines rich energy resources with extraordinary rainforest and marine sanctuaries—and hosts the site of Indonesia’s future capital, Nusantara. Offshore, the Derawan Archipelago and Maratua Island shelter green sea turtles, stingless jellyfish lakes on Kakaban, and vibrant coral walls, while Kutai and Mahakam wetlands harbor rare freshwater Irrawaddy dolphins. Traditional Dayak Kenyah woodcarvings and riverine cuisine enrich this dynamic province.",
+    "description_id": "Membentang di pesisir timur Kalimantan melalui Samarinda dan Balikpapan, Kalimantan Timur memadukan kekayaan sumber daya energi dengan kawasan konservasi hutan dan laut sekaligus menjadi lokasi ibu kota masa depan Indonesia, Nusantara. Di lepas pantai, Kepulauan Derawan dan Pulau Maratua menjadi surga penyu hijau, ubur-ubur tak menyengat di Danau Kakaban, dan terumbu karang, sementara Sungai Mahakam melindungi pesut mahakam yang langka. Ukiran kayu Dayak Kenyah dan kuliner sungai memperkaya pesona wilayah ini."
   },
   {
     "id": "kalimantan-utara",
@@ -261,7 +284,8 @@
     "lng": 117.3653,
     "area_km2": 75468,
     "population": 730100,
-    "description": "Indonesia’s youngest province in Borneo, Kalimantan Utara borders Sabah and Sarawak along rugged forested highlands and coastal deltas, with Tanjung Selor as its capital. Kayan Mentarang National Park preserves one of Southeast Asia’s largest unbroken tracts of tropical rainforest and Dayak heritage, while Tarakan Island serves as an offshore gateway known for mangrove conservation and proboscis monkeys. Swiftlet caves, mountain rapids, and cross-border river trade give this northern frontier a quiet, untouched character."
+    "description": "Indonesia’s youngest province in Borneo, Kalimantan Utara borders Sabah and Sarawak along rugged forested highlands and coastal deltas, with Tanjung Selor as its capital. Kayan Mentarang National Park preserves one of Southeast Asia’s largest unbroken tracts of tropical rainforest and Dayak heritage, while Tarakan Island serves as an offshore gateway known for mangrove conservation and proboscis monkeys. Swiftlet caves, mountain rapids, and cross-border river trade give this northern frontier a quiet, untouched character.",
+    "description_id": "Sebagai provinsi termuda di Pulau Kalimantan, Kalimantan Utara berbatasan langsung dengan Sabah dan Sarawak di sepanjang dataran tinggi berhutan lebat dan delta sungai, dengan Tanjung Selor sebagai ibu kota. Taman Nasional Kayan Mentarang melestarikan salah satu hutan hujan tropis utuh terbesar di Asia Tenggara bersama warisan budaya Dayak, sedangkan Pulau Tarakan menjadi gerbang pesisir dengan kawasan konservasi mangrove dan bekantan. Gua walet, jeram sungai pegunungan, dan perdagangan lintas batas membentuk pesona wilayah perbatasan utara ini."
   },
   {
     "id": "sulawesi-utara",
@@ -272,7 +296,8 @@
     "lng": 124.8421,
     "area_km2": 13852,
     "population": 2681500,
-    "description": "Crowning Sulawesi’s northern peninsula around coastal Manado, Sulawesi Utara is famous for dramatic volcanoes, coral walls, and warm Minahasan hospitality. Bunaken National Marine Park offers world-renowned vertical reef diving, while the Minahasa Highlands frame Lake Tondano, Mount Lokon, and colorful traditional markets in Tomohon. Known for fiery spicy cuisine like Tinutuan porridge and Rica-Rica, lively kolintang xylophone ensembles, and endemic tarsiers in Tangkoko Nature Reserve, the province pairs marine splendor with highland charm."
+    "description": "Crowning Sulawesi’s northern peninsula around coastal Manado, Sulawesi Utara is famous for dramatic volcanoes, coral walls, and warm Minahasan hospitality. Bunaken National Marine Park offers world-renowned vertical reef diving, while the Minahasa Highlands frame Lake Tondano, Mount Lokon, and colorful traditional markets in Tomohon. Known for fiery spicy cuisine like Tinutuan porridge and Rica-Rica, lively kolintang xylophone ensembles, and endemic tarsiers in Tangkoko Nature Reserve, the province pairs marine splendor with highland charm.",
+    "description_id": "Menghiasi semenanjung utara Pulau Sulawesi di sekitar kota pesisir Manado, Sulawesi Utara terkenal akan jajaran gunung berapi, dinding karang laut dalam, dan keramahan masyarakat Minahasa. Taman Laut Nasional Bunaken mendunia berkat keindahan penyelaman tebing terumbu karang, sementara Dataran Tinggi Minahasa memayungi Danau Tondano, Gunung Lokon, dan pasar tradisional Tomohon. Terkenal dengan kuliner pedas seperti Tinutuan dan Rica-Rica, musik kolintang, serta tarsius endemik di Cagar Alam Tangkoko, provinsi ini kaya pesona darat dan laut."
   },
   {
     "id": "gorontalo",
@@ -283,7 +308,8 @@
     "lng": 123.0568,
     "area_km2": 11257,
     "population": 1213200,
-    "description": "Nestled along Sulawesi’s northern arm between Tomini Bay and the Celebes Sea, Gorontalo offers serene coastal waters, rolling hills, and centuries-old Islamic-kingdom heritage around Gorontalo City. The historic Otanaha Fortress overlooks Lake Limboto, while Botubarani’s clear bay attracts whale sharks close to shore and Olele Marine Park showcases rare Salvador Dali coral sponges. Famous for sweet corn-based Binthe Biluhuta soup and Karawo hand-embroidered textiles, Gorontalo remains an inviting, tranquil northern gem."
+    "description": "Nestled along Sulawesi’s northern arm between Tomini Bay and the Celebes Sea, Gorontalo offers serene coastal waters, rolling hills, and centuries-old Islamic-kingdom heritage around Gorontalo City. The historic Otanaha Fortress overlooks Lake Limboto, while Botubarani’s clear bay attracts whale sharks close to shore and Olele Marine Park showcases rare Salvador Dali coral sponges. Famous for sweet corn-based Binthe Biluhuta soup and Karawo hand-embroidered textiles, Gorontalo remains an inviting, tranquil northern gem.",
+    "description_id": "Berada di lengan utara Sulawesi di antara Teluk Tomini dan Laut Sulawesi, Gorontalo menawarkan perairan pesisir yang tenang, perbukitan hijau, dan jejak kesultanan Islam di sekitar Kota Gorontalo. Benteng bersejarah Otanaha berdiri anggun menghadap Danau Limboto, sementara perairan Botubarani kerap disinggahi hiu paus dekat pantai dan Taman Laut Olele menampilkan karang unik. Dikenal lewat sup jagung Binthe Biluhuta dan kain sulam tangan Karawo, Gorontalo menyajikan suasana utara yang ramah dan damai."
   },
   {
     "id": "sulawesi-tengah",
@@ -294,7 +320,8 @@
     "lng": 119.8707,
     "area_km2": 61841,
     "population": 3086800,
-    "description": "Forming the rugged central hub of Sulawesi around the deep bay city of Palu, Sulawesi Tengah spans mountain valleys, pristine reef archipelagos, and enigmatic ancient history. Lore Lindu National Park safeguards giant prehistoric stone megaliths in the Bada Valley alongside rare endemic birds, while the Togean Islands in Tomini Bay offer untouched lagoon diving and Bajau stilt villages. Known for Banggai’s limestone bays, Lake Poso, and traditional Kaledo beef-bone soup, the province rewards explorers with striking diversity."
+    "description": "Forming the rugged central hub of Sulawesi around the deep bay city of Palu, Sulawesi Tengah spans mountain valleys, pristine reef archipelagos, and enigmatic ancient history. Lore Lindu National Park safeguards giant prehistoric stone megaliths in the Bada Valley alongside rare endemic birds, while the Togean Islands in Tomini Bay offer untouched lagoon diving and Bajau stilt villages. Known for Banggai’s limestone bays, Lake Poso, and traditional Kaledo beef-bone soup, the province rewards explorers with striking diversity.",
+    "description_id": "Menjadi pusat wilayah tengah Sulawesi yang bergunung-gunung dengan ibu kota Palu di tepi teluk yang dalam, Sulawesi Tengah merangkum lembah pegunungan, kepulauan karang alami, dan peninggalan prasejarah. Taman Nasional Lore Lindu menyimpan patung batu megalitik raksasa di Lembah Bada bersama satwa endemik langka, sementara Kepulauan Togean di Teluk Tomini memikat penyelam dan perkampungan Suku Bajo. Terkenal dengan teluk kapur Banggai, Danau Poso, dan hidangan khas Kaledo, provinsi ini kaya akan keragaman alam."
   },
   {
     "id": "sulawesi-barat",
@@ -305,7 +332,8 @@
     "lng": 118.8889,
     "area_km2": 16787,
     "population": 1481100,
-    "description": "Facing the Makassar Strait along western Sulawesi’s scenic coastline, Sulawesi Barat is governed from the seaside town of Mamuju and celebrated for proud Mandar maritime heritage. Traditional double-outrigger Sandeq sailboats—among the fastest wind-powered vessels in the archipelago—still race across coastal waters, while Mamasa’s misty highlands preserve carved wooden houses and terraced rice valleys. Rich in cocoa farms, silk weaving, and freshly grilled coastal fish with Jepa cassava flatbread, the province exudes authentic coastal warmth."
+    "description": "Facing the Makassar Strait along western Sulawesi’s scenic coastline, Sulawesi Barat is governed from the seaside town of Mamuju and celebrated for proud Mandar maritime heritage. Traditional double-outrigger Sandeq sailboats—among the fastest wind-powered vessels in the archipelago—still race across coastal waters, while Mamasa’s misty highlands preserve carved wooden houses and terraced rice valleys. Rich in cocoa farms, silk weaving, and freshly grilled coastal fish with Jepa cassava flatbread, the province exudes authentic coastal warmth.",
+    "description_id": "Menghadap Selat Makassar di sepanjang pesisir barat Pulau Sulawesi, Sulawesi Barat dipimpin dari kota pesisir Mamuju dan bangga akan tradisi pelaut Mandar. Perahu tradisional bercadik ganda bernama Sandeq yang terkenal sangat cepat masih dilombakan di perairan pesisir, sementara dataran tinggi Mamasa yang berkabut menjaga rumah adat berukir dan sawah terasering. Kaya akan perkebunan kakao, tenun sutra Mandar, dan ikan bakar segar bersama roti singkong Jepa, provinsi ini memancarkan kehangatan pesisir."
   },
   {
     "id": "sulawesi-selatan",
@@ -316,7 +344,8 @@
     "lng": 119.4327,
     "area_km2": 46717,
     "population": 9362300,
-    "description": "Anchored by the historic maritime metropolis of Makassar, Sulawesi Selatan unites Bugis, Makassar, and Torajan cultures across fertile plains, limestone karst canyons, and dramatic highlands. In Tana Toraja, soaring boat-shaped Tongkonan roofs and cliffside burial terraces draw global admiration, while Rammang-Rammang’s karst towers, Fort Rotterdam, and white-sand Bira Beach showcase stunning natural and colonial landmarks. Iconic Phinisi wooden schooners, spicy Coto Makassar, and Pisang Epe reflect centuries of proud seafaring tradition."
+    "description": "Anchored by the historic maritime metropolis of Makassar, Sulawesi Selatan unites Bugis, Makassar, and Torajan cultures across fertile plains, limestone karst canyons, and dramatic highlands. In Tana Toraja, soaring boat-shaped Tongkonan roofs and cliffside burial terraces draw global admiration, while Rammang-Rammang’s karst towers, Fort Rotterdam, and white-sand Bira Beach showcase stunning natural and colonial landmarks. Iconic Phinisi wooden schooners, spicy Coto Makassar, and Pisang Epe reflect centuries of proud seafaring tradition.",
+    "description_id": "Berpusat di kota pelabuhan bersejarah Makassar, Sulawesi Selatan memadukan budaya Bugis, Makassar, dan Toraja di atas dataran subur, lembah karst kapur, dan pegunungan sejuk. Di Tana Toraja, atap rumah adat Tongkonan berbentuk perahu dan tebing pemakaman menarik perhatian dunia, sementara gugusan karst Rammang-Rammang, Benteng Rotterdam, dan Pantai Bira menonjolkan keunikan alam dan sejarah. Kapal layar Phinisi yang mendunia, Coto Makassar, dan Pisang Epe menjadi kebanggaan masyarakatnya."
   },
   {
     "id": "sulawesi-tenggara",
@@ -327,7 +356,8 @@
     "lng": 122.513,
     "area_km2": 38068,
     "population": 2749000,
-    "description": "Wrapping around Sulawesi’s southeastern peninsula and offshore islands from its capital, Kendari, Sulawesi Tenggara is a premier marine sanctuary and cultural crossroads. Wakatobi National Park—celebrated globally by divers—protects dazzling coral biodiversity and Bajau sea-nomad villages, while Buton Island’s massive Wolio Fortress and Labengki’s karst lagoons captivate visitors. Blessed with lush waterfalls, nickel-rich hills, and traditional cassava Sinonggi dishes, the province showcases some of Indonesia’s finest underwater and island scenery."
+    "description": "Wrapping around Sulawesi’s southeastern peninsula and offshore islands from its capital, Kendari, Sulawesi Tenggara is a premier marine sanctuary and cultural crossroads. Wakatobi National Park—celebrated globally by divers—protects dazzling coral biodiversity and Bajau sea-nomad villages, while Buton Island’s massive Wolio Fortress and Labengki’s karst lagoons captivate visitors. Blessed with lush waterfalls, nickel-rich hills, and traditional cassava Sinonggi dishes, the province showcases some of Indonesia’s finest underwater and island scenery.",
+    "description_id": "Melingkari semenanjung tenggara Pulau Sulawesi beserta pulau-pulau di sekitarnya dari ibu kota Kendari, Sulawesi Tenggara merupakan surga bahari dan pertemuan beragam budaya maritim. Taman Nasional Wakatobi yang tersohor di kalangan penyelam dunia melindungi keanekaragaman terumbu karang dan kampung laut Suku Bajo, sementara Benteng Keraton Buton dan laguna Labengki menjadi ikon wisata. Diberkahi air terjun alami, perbukitan mineral, dan hidangan sagu atau singkong Sinonggi, provinsi ini menawarkan pesona bawah laut unggulan."
   },
   {
     "id": "maluku",
@@ -338,7 +368,8 @@
     "lng": 128.1814,
     "area_km2": 46914,
     "population": 1906400,
-    "description": "Centered around Ambon in the legendary Spice Islands of eastern Indonesia, Maluku holds a storied place in world maritime history as the original home of nutmeg and cloves. Today, crystal-clear bays in the Banda Islands, Ora Beach’s dramatic Seram Island cliffs, and Kei Islands’ powdery white sands sit beside historic forts such as Belgica and Nieuw Victoria. Revered as a \"City of Music,\" Ambon inspires harmonious vocal choirs, energetic Cakalele dances, and Papeda sago served with tangy yellow fish broth."
+    "description": "Centered around Ambon in the legendary Spice Islands of eastern Indonesia, Maluku holds a storied place in world maritime history as the original home of nutmeg and cloves. Today, crystal-clear bays in the Banda Islands, Ora Beach’s dramatic Seram Island cliffs, and Kei Islands’ powdery white sands sit beside historic forts such as Belgica and Nieuw Victoria. Revered as a \"City of Music,\" Ambon inspires harmonious vocal choirs, energetic Cakalele dances, and Papeda sago served with tangy yellow fish broth.",
+    "description_id": "Berpusat di Kota Ambon di gugusan Kepulauan Rempah bagian timur Indonesia, Maluku memegang tempat penting dalam sejarah pelayaran dunia sebagai tanah asal pala dan cengkih. Kini, teluk biru Kepulauan Banda, tebing laut Pantai Ora di Pulau Seram, dan pasir putih sehalus tepung di Kepulauan Kei berdampingan dengan benteng bersejarah seperti Belgica dan Nieuw Victoria. Dikenal sebagai Kota Musik, Ambon melahirkan harmoni paduan suara yang merdu, tarian Cakalele, serta kuliner Papeda kuah kuning yang segar."
   },
   {
     "id": "maluku-utara",
@@ -349,7 +380,8 @@
     "lng": 127.5588,
     "area_km2": 31983,
     "population": 1338000,
-    "description": "Comprising volcanic spice islands led by Halmahera, Ternate, and Tidore around the capital Sofifi on Halmahera’s coast, Maluku Utara blends towering island cones with royal sultanate history. Ternate’s Mount Gamalama and Tolukko Fort overlook the twin peak of Tidore across deep blue channels, while Morotai Island preserves WWII heritage alongside crystal diving lagoons. Rich in clove and nutmeg groves, Cendrawasih birdwatching in Halmahera’s forests, and spice-infused seafood, the province radiates historical intrigue."
+    "description": "Comprising volcanic spice islands led by Halmahera, Ternate, and Tidore around the capital Sofifi on Halmahera’s coast, Maluku Utara blends towering island cones with royal sultanate history. Ternate’s Mount Gamalama and Tolukko Fort overlook the twin peak of Tidore across deep blue channels, while Morotai Island preserves WWII heritage alongside crystal diving lagoons. Rich in clove and nutmeg groves, Cendrawasih birdwatching in Halmahera’s forests, and spice-infused seafood, the province radiates historical intrigue.",
+    "description_id": "Terdiri atas gugusan pulau rempah vulkanik seperti Halmahera, Ternate, dan Tidore dengan pusat pemerintahan di Sofifi di pesisir Halmahera, Maluku Utara memadukan puncak gunung pulau dengan sejarah kesultanan agung. Gunung Gamalama di Ternate dan Benteng Tolukko menghadap puncak kembar Pulau Tidore melintasi selat biru, sementara Pulau Morotai menyimpan sejarah Perang Dunia Kedua dan laguna jernih. Kaya akan kebun cengkih dan pala, burung bidadari halmahera, serta olahan hasil laut berbumbu rempah, provinsi ini penuh daya pikat."
   },
   {
     "id": "papua",
@@ -360,7 +392,8 @@
     "lng": 140.669,
     "area_km2": 82681,
     "population": 1085300,
-    "description": "Situated on New Guinea’s northern coast around scenic Jayapura and Humboldt Bay, Papua unites coastal cities, lush Cyclops Mountain rainforests, and vibrant Melanesian heritage. Lake Sentani—dotted with stilt villages, bark paintings, and annual cultural festivals—lies just inland from Jayapura’s turquoise beaches and Yotefa Bay bridges. Home to endemic birds-of-paradise, traditional noken woven bags, and sago-based cuisine like Papeda and grilled fish, Papua offers an inspiring gateway to Indonesia’s easternmost landscapes."
+    "description": "Situated on New Guinea’s northern coast around scenic Jayapura and Humboldt Bay, Papua unites coastal cities, lush Cyclops Mountain rainforests, and vibrant Melanesian heritage. Lake Sentani—dotted with stilt villages, bark paintings, and annual cultural festivals—lies just inland from Jayapura’s turquoise beaches and Yotefa Bay bridges. Home to endemic birds-of-paradise, traditional noken woven bags, and sago-based cuisine like Papeda and grilled fish, Papua offers an inspiring gateway to Indonesia’s easternmost landscapes.",
+    "description_id": "Berada di pesisir utara Pulau Papua di sekitar Kota Jayapura dan Teluk Humboldt, Papua memadukan kota teluk yang indah, hutan pegunungan Cyclops, dan kekayaan budaya Melanesia. Danau Sentani dengan kampung-kampung di atas air, lukisan kulit kayu, dan festival tahunannya terletak tidak jauh dari pantai wisata Jayapura dan jembatan megah Teluk Yotefa. Menjadi rumah bagi burung cenderawasih, tas rajut tradisional noken, serta kuliner Papeda dan ikan bakar, Papua menawarkan gerbang indah menuju timur Nusantara."
   },
   {
     "id": "papua-barat",
@@ -371,7 +404,8 @@
     "lng": 134.062,
     "area_km2": 60275,
     "population": 565800,
-    "description": "Occupying the scenic Bird’s Head and Bomberai peninsulas around the coastal capital of Manokwari, Papua Barat blends misty Arfak Mountain birdwatching reserves with dramatic marine wilderness. Cenderawasih Bay National Park is celebrated worldwide for year-round encounters with gentle whale sharks near Kwatisore, while Mansinam Island marks a pivotal site in Papua’s modern spiritual history. Dense coastal mangroves, Triton Bay’s limestone bays, and warm Papuan hospitality highlight the province’s remarkable ecological richness."
+    "description": "Occupying the scenic Bird’s Head and Bomberai peninsulas around the coastal capital of Manokwari, Papua Barat blends misty Arfak Mountain birdwatching reserves with dramatic marine wilderness. Cenderawasih Bay National Park is celebrated worldwide for year-round encounters with gentle whale sharks near Kwatisore, while Mansinam Island marks a pivotal site in Papua’s modern spiritual history. Dense coastal mangroves, Triton Bay’s limestone bays, and warm Papuan hospitality highlight the province’s remarkable ecological richness.",
+    "description_id": "Menempati kawasan Semenanjung Kepala Burung dan Bomberai di sekitar ibu kota pesisir Manokwari, Papua Barat memadukan cagar pengamatan burung Pegunungan Arfak dengan taman laut yang luas. Taman Nasional Teluk Cenderawasih terkenal di dunia akan kemunculan hiu paus jinak sepanjang tahun di sekitar Kwatisore, sedangkan Pulau Mansinam menjadi situs penting sejarah spiritual Papua. Hutan bakau lebat, teluk batu kapur Triton di Kaimana, dan keramahan masyarakatnya menonjolkan kekayaan alam daerah ini."
   },
   {
     "id": "papua-selatan",
@@ -382,7 +416,8 @@
     "lng": 140.4018,
     "area_km2": 117849,
     "population": 531200,
-    "description": "Stretching across vast southern wetlands, savannas, and winding rivers toward Indonesia’s eastern border, Papua Selatan is anchored by the historic frontier city of Merauke. Wasur National Park—often called the Serengeti of Papua—protects sweeping marshlands, towering termite mounds, wallabies, and flocks of migratory birds, while Asmat communities along the coast are world-famous for intricate woodcarving artistry. Known for Indonesia’s easternmost zero-kilometer monument in Sota and abundant river fisheries, the province showcases expansive wilderness."
+    "description": "Stretching across vast southern wetlands, savannas, and winding rivers toward Indonesia’s eastern border, Papua Selatan is anchored by the historic frontier city of Merauke. Wasur National Park—often called the Serengeti of Papua—protects sweeping marshlands, towering termite mounds, wallabies, and flocks of migratory birds, while Asmat communities along the coast are world-famous for intricate woodcarving artistry. Known for Indonesia’s easternmost zero-kilometer monument in Sota and abundant river fisheries, the province showcases expansive wilderness.",
+    "description_id": "Membentang melintasi lahan basah yang luas, padang sabana, dan sungai berkelok di perbatasan timur Indonesia, Papua Selatan berpusat di kota perbatasan bersejarah Merauke. Taman Nasional Wasur yang dijuluki Serengeti Papua melindungi rawa alami, sarang semut raksasa musamus, walabi, dan ribuan burung migran, sementara masyarakat Asmat di pesisir mendunia lewat seni ukir kayu. Dikenal lewat Tugu Titik Nol Kilometer paling timur Indonesia di Sota, provinsi ini menyuguhkan alam liar yang megah."
   },
   {
     "id": "papua-tengah",
@@ -393,7 +428,8 @@
     "lng": 135.4833,
     "area_km2": 61073,
     "population": 1452800,
-    "description": "Extending from the coral-fringed shores of Cenderawasih Bay near its capital, Nabire, up to the towering glaciated peaks of the Sudirman Range, Papua Tengah showcases extraordinary elevation contrasts. Nabire’s clear waters shelter gentle whale sharks and coral reefs, while inland highlands hold Puncak Jaya (Carstensz Pyramid)—the highest mountain in Indonesia and Oceania—surrounded by Lorentz National Park’s alpine valleys. Traditional highland horticulture, coastal sago dishes, and distinct tribal heritage define this diverse region."
+    "description": "Extending from the coral-fringed shores of Cenderawasih Bay near its capital, Nabire, up to the towering glaciated peaks of the Sudirman Range, Papua Tengah showcases extraordinary elevation contrasts. Nabire’s clear waters shelter gentle whale sharks and coral reefs, while inland highlands hold Puncak Jaya (Carstensz Pyramid)—the highest mountain in Indonesia and Oceania—surrounded by Lorentz National Park’s alpine valleys. Traditional highland horticulture, coastal sago dishes, and distinct tribal heritage define this diverse region.",
+    "description_id": "Membentang dari pantai berkarang Teluk Cenderawasih di dekat ibu kota Nabire hingga puncak bersalju abadi Pegunungan Sudirman, Papua Tengah menampilkan kontras ketinggian alam yang luar biasa. Perairan Nabire yang jernih menjadi rumah hiu paus dan terumbu karang indah, sedangkan kawasan pegunungannya menjulang Puncak Jaya sebagai puncak tertinggi di Indonesia dan Oseania di dalam Taman Nasional Lorentz. Tradisi bercocok tanam pegunungan, hidangan sagu pesisir, dan budaya suku yang beragam memperkaya wilayah ini."
   },
   {
     "id": "papua-pegunungan",
@@ -404,7 +440,8 @@
     "lng": 138.9478,
     "area_km2": 51213,
     "population": 1448400,
-    "description": "As Indonesia’s only landlocked province, Papua Pegunungan rises high in the central mountain spine of New Guinea, centered on Wamena in the lush Baliem Valley. Surrounded by emerald peaks, cool highland mist, and winding mountain rivers, the Baliem Valley preserves ancient Dani farming terraces, suspension bridges, and the celebrated annual Baliem Valley Cultural Festival. Renowned for sweet highland yams, traditional earth-oven Bakar Batu feasts, and colorful woven noken bags, it offers one of Indonesia’s most extraordinary highland cultures."
+    "description": "As Indonesia’s only landlocked province, Papua Pegunungan rises high in the central mountain spine of New Guinea, centered on Wamena in the lush Baliem Valley. Surrounded by emerald peaks, cool highland mist, and winding mountain rivers, the Baliem Valley preserves ancient Dani farming terraces, suspension bridges, and the celebrated annual Baliem Valley Cultural Festival. Renowned for sweet highland yams, traditional earth-oven Bakar Batu feasts, and colorful woven noken bags, it offers one of Indonesia’s most extraordinary highland cultures.",
+    "description_id": "Sebagai satu-satunya provinsi di Indonesia yang tidak berbatasan langsung dengan laut, Papua Pegunungan berdiri megah di gugusan gunung tengah Papua dengan pusat kota Wamena di Lembah Baliem yang subur. Dikelilingi puncak hijau, kabut sejuk pegunungan, dan sungai berarus deras, Lembah Baliem menjaga tradisi ladang ubi masyarakat Dani, jembatan gantung tradisional, dan Festival Budaya Lembah Baliem yang mendunia. Terkenal dengan pesta adat Bakar Batu dan kerajinan tas noken warna-warni, wilayah ini menyimpan budaya pegunungan yang unik."
   },
   {
     "id": "papua-barat-daya",
@@ -415,6 +452,7 @@
     "lng": 131.2558,
     "area_km2": 39123,
     "population": 616100,
-    "description": "Crowning the northwestern tip of New Guinea around the lively maritime hub of Sorong, Papua Barat Daya is the gateway to the world-famous Raja Ampat archipelago. Its 1,500 limestone karst islands, turquoise lagoons of Wayag and Piaynemo, and record-breaking coral reef biodiversity make it one of Earth’s premier marine wonders. Alongside vibrant reefs, the province’s Bird’s Head rainforests shelter colorful birds-of-paradise, historic coastal towns, and fresh spice-grilled seafood served along Sorong’s waterfront."
+    "description": "Crowning the northwestern tip of New Guinea around the lively maritime hub of Sorong, Papua Barat Daya is the gateway to the world-famous Raja Ampat archipelago. Its 1,500 limestone karst islands, turquoise lagoons of Wayag and Piaynemo, and record-breaking coral reef biodiversity make it one of Earth’s premier marine wonders. Alongside vibrant reefs, the province’s Bird’s Head rainforests shelter colorful birds-of-paradise, historic coastal towns, and fresh spice-grilled seafood served along Sorong’s waterfront.",
+    "description_id": "Menempati ujung barat laut Pulau Papua di sekitar kota pelabuhan maritim Sorong, Papua Barat Daya merupakan gerbang utama menuju kepulauan Raja Ampat yang tersohor di dunia. Sebanyak seribu lima ratus lebih pulau karst kapur, laguna biru kehijauan Wayag dan Piaynemo, serta keanekaragaman hayati terumbu karang tertinggi di bumi menjadikannya keajaiban bahari kelas dunia. Selain pesona lautnya, hutan Kepala Burung melindungi burung cenderawasih serta sajian hasil laut segar khas Sorong."
   }
 ]

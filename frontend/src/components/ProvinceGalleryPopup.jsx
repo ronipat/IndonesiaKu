@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../lib/i18n.js';
 import { getProvincePhotos } from '../services/provinceService.js';
 
 export default function ProvinceGalleryPopup({ province, onClose }) {
+  const { t } = useLanguage();
   const [photos, setPhotos] = useState([]);
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -61,13 +63,13 @@ export default function ProvinceGalleryPopup({ province, onClose }) {
     <section
       className="province-popup province-gallery-popup"
       role="dialog"
-      aria-label={`${province.name} photo gallery`}
+      aria-label={t('gallery.aria', { name: province.name })}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="popup-header">
         <div>
-          <span className="gallery-pill">Gallery</span>
-          <h3>{province.name} Photos</h3>
+          <span className="gallery-pill">{t('gallery.pill')}</span>
+          <h3>{t('gallery.title', { name: province.name })}</h3>
         </div>
         <div className="gallery-header-right">
           {photos.length > 0 && (
@@ -79,7 +81,7 @@ export default function ProvinceGalleryPopup({ province, onClose }) {
             type="button"
             className="detail-close-btn"
             onClick={onClose}
-            aria-label="Close photo gallery"
+            aria-label={t('gallery.closeAria')}
           >
             ×
           </button>
@@ -92,20 +94,18 @@ export default function ProvinceGalleryPopup({ province, onClose }) {
             <div className="map-move-loader-badge">
               <div className="map-spinner map-spinner-sm" aria-hidden="true" />
             </div>
-            <p className="map-loading-text">Loading photos of {province.name}...</p>
+            <p className="map-loading-text">{t('gallery.loading', { name: province.name })}</p>
           </div>
         ) : loadError ? (
-          <div className="gallery-placeholder">
-            Unable to load gallery photos from database.
-          </div>
+          <div className="gallery-placeholder">{t('gallery.error')}</div>
         ) : photos.length === 0 ? (
           <div className="gallery-placeholder gallery-empty-state">
-            <p>No gallery photos stored in the database yet for {province.name}.</p>
+            <p>{t('gallery.empty', { name: province.name })}</p>
             <Link
               to={`/admin?province=${encodeURIComponent(province.id)}`}
               className="gallery-manage-link"
             >
-              Manage gallery in Admin →
+              {t('gallery.manageLink')}
             </Link>
           </div>
         ) : (
@@ -122,7 +122,7 @@ export default function ProvinceGalleryPopup({ province, onClose }) {
                   type="button"
                   className="gallery-arrow gallery-prev"
                   onClick={goPrev}
-                  aria-label="Previous photo"
+                  aria-label={t('gallery.prevAria')}
                 >
                   ‹
                 </button>
@@ -130,7 +130,7 @@ export default function ProvinceGalleryPopup({ province, onClose }) {
                   type="button"
                   className="gallery-arrow gallery-next"
                   onClick={goNext}
-                  aria-label="Next photo"
+                  aria-label={t('gallery.nextAria')}
                 >
                   ›
                 </button>
@@ -143,7 +143,7 @@ export default function ProvinceGalleryPopup({ province, onClose }) {
       {current && current.caption && <p className="gallery-caption">{current.caption}</p>}
 
       {photos.length > 1 && (
-        <div className="gallery-thumbs" role="tablist" aria-label="Select photo">
+        <div className="gallery-thumbs" role="tablist" aria-label={t('gallery.selectPhotoAria')}>
           {photos.map((photo, idx) => (
             <button
               key={photo.id || photo.url}
@@ -152,7 +152,7 @@ export default function ProvinceGalleryPopup({ province, onClose }) {
               aria-selected={idx === index}
               className={`gallery-thumb-btn ${idx === index ? 'active' : ''}`}
               onClick={() => setIndex(idx)}
-              aria-label={`View photo ${idx + 1}`}
+              aria-label={t('gallery.viewPhotoAria', { num: idx + 1 })}
             >
               <img src={photo.url} alt="" />
             </button>

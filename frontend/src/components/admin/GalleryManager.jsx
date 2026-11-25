@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLanguage } from '../../lib/i18n.js';
 import {
   addProvincePhotoByUrl,
   deleteProvincePhoto,
@@ -8,7 +9,7 @@ import {
   uploadProvincePhoto,
 } from '../../services/adminService.js';
 
-function PhotoCard({ photo, index, total, busy, onSaveCaption, onMove, onDelete }) {
+function PhotoCard({ photo, index, total, busy, onSaveCaption, onMove, onDelete, t }) {
   const [caption, setCaption] = useState(photo.caption || '');
   const [saving, setSaving] = useState(false);
 
@@ -43,7 +44,7 @@ function PhotoCard({ photo, index, total, busy, onSaveCaption, onMove, onDelete 
             type="text"
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
-            placeholder="Photo caption..."
+            placeholder={t('gm.photoCaption')}
             aria-label={`Caption for photo ${index + 1}`}
           />
           {dirty && (
@@ -53,7 +54,7 @@ function PhotoCard({ photo, index, total, busy, onSaveCaption, onMove, onDelete 
               onClick={handleSave}
               disabled={saving || busy}
             >
-              {saving ? '...' : 'Save'}
+              {saving ? '...' : t('gm.saveBtn')}
             </button>
           )}
         </div>
@@ -87,7 +88,7 @@ function PhotoCard({ photo, index, total, busy, onSaveCaption, onMove, onDelete 
             onClick={() => onDelete(photo)}
             disabled={busy}
           >
-            Delete
+            {t('gm.deleteBtn')}
           </button>
         </div>
       </div>
@@ -102,6 +103,7 @@ export default function GalleryManager({
   onPhotosChanged,
   notify,
 }) {
+  const { t } = useLanguage();
   const [uploadCaption, setUploadCaption] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [dragOver, setDragOver] = useState(false);
@@ -235,10 +237,8 @@ export default function GalleryManager({
     <div className="admin-gallery-manager">
       <div className="admin-gallery-toolbar">
         <div>
-          <h3>Gallery Photos ({photos.length})</h3>
-          <p className="admin-muted">
-            Upload images to Supabase Storage, link external image URLs, or import Wikimedia photos.
-          </p>
+          <h3>{t('gm.title', { count: photos.length })}</h3>
+          <p className="admin-muted">{t('gm.subtitle')}</p>
         </div>
         <button
           type="button"
@@ -246,13 +246,13 @@ export default function GalleryManager({
           onClick={handleImportWikimedia}
           disabled={isBusy}
         >
-          {busyAction === 'wikimedia' ? 'Importing...' : 'Import from Wikimedia'}
+          {busyAction === 'wikimedia' ? t('gm.importing') : t('gm.importWikimedia')}
         </button>
       </div>
 
       <div className="admin-gallery-inputs">
         <form onSubmit={handleUploadSubmit} className="admin-panel-box">
-          <h4>Upload Image File</h4>
+          <h4>{t('gm.uploadTitle')}</h4>
           <div
             className={`admin-dropzone ${dragOver ? 'drag-over' : ''}`}
             onDragOver={(e) => {
@@ -281,11 +281,11 @@ export default function GalleryManager({
             />
             {selectedFile ? (
               <span>
-                Selected: <strong>{selectedFile.name}</strong> (
+                {t('gm.selectedFile')} <strong>{selectedFile.name}</strong> (
                 {(selectedFile.size / 1024).toFixed(0)} KB)
               </span>
             ) : (
-              <span>Drag & drop an image here, or click to browse</span>
+              <span>{t('gm.dropzonePrompt')}</span>
             )}
           </div>
           <div className="admin-inline-form">
@@ -293,7 +293,7 @@ export default function GalleryManager({
               type="text"
               value={uploadCaption}
               onChange={(e) => setUploadCaption(e.target.value)}
-              placeholder="Optional caption..."
+              placeholder={t('gm.captionOptional')}
               aria-label="Upload photo caption"
             />
             <button
@@ -301,13 +301,13 @@ export default function GalleryManager({
               className="admin-btn admin-btn-primary"
               disabled={!selectedFile || isBusy}
             >
-              {busyAction === 'upload' ? 'Uploading...' : 'Upload'}
+              {busyAction === 'upload' ? t('gm.uploading') : t('gm.uploadBtn')}
             </button>
           </div>
         </form>
 
         <form onSubmit={handleAddUrl} className="admin-panel-box">
-          <h4>Add Photo by URL</h4>
+          <h4>{t('gm.addUrlTitle')}</h4>
           <div className="admin-url-stack">
             <input
               type="url"
@@ -322,7 +322,7 @@ export default function GalleryManager({
                 type="text"
                 value={urlCaption}
                 onChange={(e) => setUrlCaption(e.target.value)}
-                placeholder="Photo caption..."
+                placeholder={t('gm.photoCaption')}
                 aria-label="External photo caption"
               />
               <button
@@ -330,7 +330,7 @@ export default function GalleryManager({
                 className="admin-btn admin-btn-primary"
                 disabled={!urlInput.trim() || isBusy}
               >
-                {busyAction === 'url' ? 'Adding...' : 'Add URL'}
+                {busyAction === 'url' ? t('gm.adding') : t('gm.addUrlBtn')}
               </button>
             </div>
           </div>
@@ -343,11 +343,11 @@ export default function GalleryManager({
       </div>
 
       {loading ? (
-        <div className="admin-empty-box">Loading gallery photos...</div>
+        <div className="admin-empty-box">{t('gm.loadingPhotos')}</div>
       ) : photos.length === 0 ? (
         <div className="admin-empty-box">
-          No gallery photos stored for {province.name} yet. Upload an image, add a URL, or click{' '}
-          <strong>Import from Wikimedia</strong> above.
+          {t('gm.noPhotosPrefix', { name: province.name })}{' '}
+          <strong>{t('gm.importWikimedia')}</strong> {t('gm.noPhotosSuffix')}
         </div>
       ) : (
         <div className="admin-photo-grid">
@@ -361,6 +361,7 @@ export default function GalleryManager({
               onSaveCaption={handleSaveCaption}
               onMove={handleMove}
               onDelete={handleDelete}
+              t={t}
             />
           ))}
         </div>

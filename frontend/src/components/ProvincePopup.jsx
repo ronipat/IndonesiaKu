@@ -6,6 +6,7 @@ import {
   TileLayer,
   useMap,
 } from 'react-leaflet';
+import { useLanguage } from '../lib/i18n.js';
 import { PROVINCE_TO_GEOJSON } from '../lib/geoMappings.js';
 import { buildDefaultDescription } from '../services/provinceService.js';
 import { isTtsSupported, speakTextHd, stopSpeech } from '../services/ttsService.js';
@@ -133,16 +134,23 @@ function ProvinceMiniMap({ province, geojson, islandColor }) {
   );
 }
 
-function getProvinceDescription(province) {
+function getProvinceDescription(province, lang) {
+  if (lang === 'id') {
+    if (province.description_id && province.description_id.trim()) {
+      return province.description_id;
+    }
+    return buildDefaultDescription(province, 'id');
+  }
   if (province.description && province.description.trim()) {
     return province.description;
   }
-  return buildDefaultDescription(province);
+  return buildDefaultDescription(province, 'en');
 }
 
 const AUTO_PLAY_DELAY_MS = 5000;
 
 export default function ProvincePopup({ province, geojson, islandColor, onClose }) {
+  const { lang, t, translateIsland } = useLanguage();
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [activeVoiceName, setActiveVoiceName] = useState('');
   const audioRef = useRef(null);
@@ -165,13 +173,14 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
   }, []);
 
   const speakFallback = useCallback(
-    (text) => {
+    (text, targetLang) => {
       if (!ttsSupported) {
         setIsSpeaking(false);
         return;
       }
       setIsSpeaking(true);
       speakTextHd(text, {
+        lang: targetLang,
         onVoiceSelected: (voiceName) => setActiveVoiceName(voiceName),
         onStart: () => setIsSpeaking(true),
         onEnd: () => setIsSpeaking(false),
@@ -182,13 +191,13 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
   );
 
   const playNarration = useCallback(
-    (targetProvince) => {
+    (targetProvince, targetLang = lang) => {
       stopAudio();
-      const text = getProvinceDescription(targetProvince);
+      const text = getProvinceDescription(targetProvince, targetLang);
       const customAudioUrl = targetProvince.audio_url?.trim();
 
-      if (!customAudioUrl) {
-        speakFallback(text);
+      if (targetLang === 'id' || !customAudioUrl) {
+        speakFallback(text, targetLang);
         return;
       }
 
@@ -199,7 +208,7 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
       audio.onerror = () => {
         if (audioRef.current === audio) {
           audioRef.current = null;
-          speakFallback(text);
+          speakFallback(text, targetLang);
         }
       };
 
@@ -207,11 +216,11 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
       audio.play().catch(() => {
         if (audioRef.current === audio) {
           audioRef.current = null;
-          speakFallback(text);
+          speakFallback(text, targetLang);
         }
       });
     },
-    [speakFallback, stopAudio]
+    [lang, speakFallback, stopAudio]
   );
 
   useEffect(() => {
@@ -222,16 +231,16 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
     }
     delayTimerRef.current = setTimeout(() => {
       delayTimerRef.current = null;
-      playNarration(province);
+      playNarration(province, lang);
     }, AUTO_PLAY_DELAY_MS);
     return () => {
       stopAudio();
     };
-  }, [province, playNarration, stopAudio]);
+  }, [province, lang, playNarration, stopAudio]);
 
   if (!province) return null;
 
-  const description = getProvinceDescription(province);
+  const description = getProvinceDescription(province, lang);
   const density =
     province.area_km2 > 0
       ? (province.population / province.area_km2).toLocaleString('id-ID', {
@@ -243,6 +252,10 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
     stopAudio();
     onClose();
   };
+
+  const voiceBadgeText = activeVoiceName
+    ? `${lang.toUpperCase()} · ${activeVoiceName}`
+    : `${lang.toUpperCase()} · ${t('popup.voiceLocaleLabel')}`;
 
   return (
     <section
@@ -258,7 +271,7 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
             className="detail-island-tag"
             style={{ backgroundColor: islandColor || '#E56A4A' }}
           >
-            {province.island}
+            {translateIsland(province.island)}
           </span>
           <h2 id="popup-province-title">{province.name}</h2>
         </div>
@@ -266,7 +279,7 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
           type="button"
           className="detail-close-btn"
           onClick={handleClose}
-          aria-label="Close province popup"
+          aria-label={t('popup.closeAria')}
         >
           ×
         </button>
@@ -282,29 +295,36 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
 
       <dl className="detail-stats">
         <div className="stat-item">
-          <dt>Capital</dt>
+          <dt>{t('sidebar.capital')}</dt>
           <dd>{province.capital}</dd>
         </div>
         <div className="stat-item">
-          <dt>Population</dt>
+          <dt>{t('sidebar.population')}</dt>
           <dd>{Number(province.population || 0).toLocaleString('id-ID')}</dd>
         </div>
         <div className="stat-item">
-          <dt>Area</dt>
+          <dt>{t('sidebar.area')}</dt>
           <dd>{Number(province.area_km2 || 0).toLocaleString('id-ID')} km²</dd>
         </div>
         <div className="stat-item">
-          <dt>Density</dt>
+          <dt>{t('sidebar.density')}</dt>
           <dd>{density} / km²</dd>
         </div>
       </dl>
 
       <div className="popup-footer">
+        <span className="popup-voice-tag" title={voiceBadgeText}>
+          {voiceBadgeText}
+        </span>
         <button
           type="button"
           className={`tts-btn ${isSpeaking ? 'speaking' : ''}`}
-          onClick={() => (isSpeaking ? stopAudio() : playNarration(province))}
-          title={activeVoiceName ? `HD Voice: ${activeVoiceName}` : 'Play narration'}
+          onClick={() => (isSpeaking ? stopAudio() : playNarration(province, lang))}
+          title={
+            activeVoiceName
+              ? `${t('popup.voicePrefix')}: ${activeVoiceName}`
+              : t('popup.playNarrationTitle')
+          }
         >
           {isSpeaking ? (
             <>
@@ -317,7 +337,7 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
               >
                 <rect x="6" y="6" width="12" height="12" rx="2" />
               </svg>
-              <span>Stop Audio</span>
+              <span>{t('popup.stopAudio')}</span>
             </>
           ) : (
             <>
@@ -336,7 +356,7 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
                 <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
                 <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
               </svg>
-              <span>Listen Audio</span>
+              <span>{t('popup.listenAudio')}</span>
             </>
           )}
         </button>

@@ -4,11 +4,11 @@ An interactive full-stack web application exploring all **38 provinces of Indone
 
 ## Features
 
-- **Interactive Map (`/`)**: Full-bleed Leaflet map with GeoJSON province boundaries, population-scaled island-group markers, debounced search, island-group filter chips, sidebar fly-to navigation (flies to the selected province without opening the popup), and 3 themes (`light` soft pale-orange, high-contrast `dark`, and `cartoon`) with crisp `20px` background grids and uniform heavy frosted-blur loading overlays across initial load, Reset All, theme switching, map pan/zoom, galleries, and admin auth.
-- **Database-Backed Province Details & Photo Galleries**: Clicking a province on the map opens enlarged dual popups (`540px` detail popup and `680px` photo gallery popup with a `400px` stage), featuring a live original-color OpenStreetMap minimap with GeoJSON province outline and capital marker across all themes, curated scenic Wikimedia landscape photos (`156` across all 38 provinces), enriched regional descriptions (`min 497 chars`), demographic stats, and full non-scrolling description layout.
-- **HD Natural Voice Narration (`ttsService.js`)**: Automatically prioritizes Neural/Natural/Online/Premium browser voices over legacy robotic voices, tuned for clarity (`pitch: 1.0`, `rate: 0.95`) with sentence-by-sentence playback (`160ms` pauses), a 5-second auto-play delay when opening province details, plus optional custom `audio_url` playback.
+- **Interactive Map (`/`)**: Full-bleed Leaflet map with GeoJSON province boundaries, population-scaled island-group markers, debounced search, island-group filter chips, sidebar province selection (highlights and previews details without moving the map), bilingual `EN | ID` language switcher, and 3 themes (`light` soft pale-orange, high-contrast `dark`, and `cartoon`) with crisp `20px` background grids and atomic, flicker-free theme transitions.
+- **Database-Backed Province Details & Photo Galleries**: Clicking a province on the map opens enlarged dual popups (`540px` detail popup and `680px` photo gallery popup with a `400px` stage), featuring a live original-color OpenStreetMap minimap with GeoJSON province outline and capital marker across all themes, curated scenic Wikimedia landscape photos (`156` across all 38 provinces), enriched regional descriptions in both English and Bahasa Indonesia (`description_id`), demographic stats, and full non-scrolling description layout.
+- **Bilingual HD Natural Voice Narration (`ttsService.js`)**: Automatically prioritizes Neural/Natural/Online/Premium browser voices in either English or Indonesian (`id-ID`, including Gadis, Damayanti, Google Bahasa Indonesia, and Ardi) over legacy robotic voices, with sentence-by-sentence playback (`160ms` pauses), a 5-second auto-play delay when opening province details, plus optional custom `audio_url` playback in English mode.
 - **Capital Video Player Popup (`CapitalVideoPopup.jsx`)**: Clicking any provincial capital marker on the map opens a compact-header/footer 16:9 video modal without zooming the map (`1` configurable video per capital), supporting YouTube, Vimeo, Google Drive, and direct MP4/WebM links, with a 5-second countdown overlay and immediate **Play Now** action.
-- **Streamlined Admin CMS (`/admin`)**: Clean editorial workspace with decoupled `Admin` badge, 4 compact KPI summary cards (including a live photo coverage bar), equal-height province selector and editor panels, metadata & description editor (with summary generator and HD TTS preview), **Capital Video URL** configuration with live provider detection, and `GalleryManager` (Supabase Storage uploads to `province-gallery`, external URLs, filtered Wikimedia Commons 1-click photo imports, captions, and reordering).
+- **Streamlined Admin CMS (`/admin`)**: Clean bilingual (`EN | ID`) editorial workspace with decoupled `Admin` badge, 4 compact KPI summary cards (including a live photo coverage bar), equal-height province selector and editor panels, metadata & dual-language description editor (with English/Indonesian summary generators and independent **Test Voice (EN)** / **Test Voice (ID)** previews), **Capital Video URL** configuration with live provider detection, and `GalleryManager` (Supabase Storage uploads to `province-gallery`, external URLs, filtered Wikimedia Commons 1-click photo imports, captions, and reordering).
 - **Instant Local Demo Mode**: When `frontend/.env` is not yet configured, IndonesiaKu automatically runs in browser-persisted Demo Mode (`localStorage`) seeded with all 38 provinces so you can test both `/` and `/admin` right away.
 
 ## Project Structure
@@ -28,6 +28,7 @@ IndonesiaKu/
       20261125000003_enrich_province_descriptions.sql
       20261125000004_seed_province_photos.sql
       20261126000001_add_capital_video_url.sql
+      20261126000002_add_description_id.sql
     functions/
       admin-api/
         index.ts
@@ -49,6 +50,7 @@ IndonesiaKu/
       lib/
         supabase.js
         geoMappings.js
+        i18n.js
       data/
         defaultProvinces.json
       utils/
@@ -80,13 +82,14 @@ IndonesiaKu/
 Create a project at [supabase.com](https://supabase.com) and locate your **Project URL** and **anon public key** under **Project Settings → API**.
 
 ### 2. Run the SQL Migrations
-Run all 5 migrations in order via the **Supabase SQL Editor** (or push with the Supabase CLI using `supabase link` and `supabase db push`):
+Run all 6 migrations in order via the **Supabase SQL Editor** (or push with the Supabase CLI using `supabase link` and `supabase db push`):
 
 1. `supabase/migrations/20261125000001_initial_schema.sql` — creates `public.provinces`, `public.province_photos`, `public.admin_users`, `public.island_groups` view, `private.is_admin()` security helper, RLS policies, and the `province-gallery` Storage bucket.
 2. `supabase/migrations/20261125000002_seed_provinces.sql` — idempotently seeds all 38 provinces of Indonesia across 7 island groups.
 3. `supabase/migrations/20261125000003_enrich_province_descriptions.sql` — enriches geographical, cultural, and economic descriptions across all 38 provinces.
 4. `supabase/migrations/20261125000004_seed_province_photos.sql` — idempotently seeds 156 curated scenic landscape Wikimedia/Wikipedia photos across all 38 provinces (minimum 3 per province).
 5. `supabase/migrations/20261126000001_add_capital_video_url.sql` — adds the nullable `video_url text` column to `public.provinces` for capital video playback.
+6. `supabase/migrations/20261126000002_add_description_id.sql` — adds `description_id text` to `public.provinces` and seeds Bahasa Indonesia descriptions for all 38 provinces.
 
 ### 3. Create an Admin Account
 1. In **Supabase Dashboard → Authentication → Users**, create a user (email + password) and copy their User UID.
@@ -138,18 +141,19 @@ This outputs static assets to `frontend/dist/`. Since IndonesiaKu uses client-si
 ## Changelog & Detailed Highlights
 
 - **Backend & Data Enrichment**:
-  - Normalized Supabase schema with 38 Indonesian provinces, enriched descriptions, 156 curated modern scenic photos, and per-province capital video URLs (`video_url`).
-  - RLS-protected admin updates plus `admin-api` Edge Function support for `video_url` in `POST` and `PATCH` routes.
+  - Normalized Supabase schema with 38 Indonesian provinces, enriched English & Bahasa Indonesia descriptions (`description_id`), 156 curated modern scenic photos, and per-province capital video URLs (`video_url`).
+  - RLS-protected admin updates plus `admin-api` Edge Function support for `video_url` and `description_id` in `POST` and `PATCH` routes.
 - **Interactive Map, Themes & Loaders**:
-  - Eliminated initial OpenStreetMap tile flash on first render.
-  - Added uniform heavy frosted-blur spinners (`backdrop-filter: blur(24px)`) for initial load, Reset All (`550ms`), theme switches (`450ms`), map movement (`MapMovementTracker`), gallery loading, sidebar detail loading, and Admin session checks.
+  - Eliminated initial OpenStreetMap tile flash on first render and fixed the Light → Dark theme-switch flicker via synchronous `useLayoutEffect` palette updates, atomic `html.theme-switching` transition suppression, and smooth `.global-transition-loader` fadeout.
+  - Added uniform heavy frosted-blur spinners (`backdrop-filter: blur(24px)`) for initial load, Reset All (`550ms`), theme switches, map movement (`MapMovementTracker`), gallery loading, sidebar detail loading, and Admin session checks.
   - Refined light theme (`#FEF5EE` pale-orange canvas, `#D4A893` borders), high-contrast dark theme (`#11161D` / `#242D3A`), cartoon theme, and halved `20px` background grid cells.
-  - Sidebar province selection flies smoothly to the province without auto-opening popups.
-- **Province Popups, Minimap, HD TTS & Capital Videos**:
+  - Left sidebar province clicks update selection and sidebar stats cleanly without unwanted map panning or zooming.
+- **Bilingual (`EN | ID`) UI, Minimap, Indonesian HD TTS & Capital Videos**:
+  - Added segmented `EN | ID` switcher (`i18n.js`) translating map controls, hero, legend (`Sumatera`, `Jawa`), sidebar, popups, and Admin CMS.
   - Enlarged detail (`540px`) and gallery (`680px`, `400px` stage) popups with unobstructed full-height descriptions and live original-color OpenStreetMap minimaps across all themes.
-  - Added `ttsService.js` for Neural/Natural HD voice prioritization, sentence-level phrasing (`160ms` pauses), and 5-second auto-play delay.
+  - Added `ttsService.js` for Neural/Natural HD voice prioritization in both English and Bahasa Indonesia (`id-ID`), sentence-level phrasing (`160ms` pauses), and 5-second auto-play delay.
   - Added `CapitalVideoPopup.jsx` and `videoUrl.js` so clicking a capital marker opens a compact 16:9 video modal without zooming the map, complete with a 5-second countdown overlay + **Play Now** control for YouTube, Vimeo, Google Drive, and direct MP4/WebM links.
 - **Admin CMS Refinements (`/admin`)**:
   - Polished header branding (`IndonesiaKu` without gap or orange square) and decoupled `Admin` pill badge.
   - Compact 4-card KPI summary grid with accent bars, SVG icons, and live photo coverage meter, plus equal-height province list & editor panels.
-  - Added **Capital Video URL** editor input with live provider detection badge and upgraded Wikimedia Commons import filtering (`wikimediaService.js`).
+  - Added **Description — Bahasa Indonesia** editor with **Test Voice (ID)** preview, **Capital Video URL** input with live provider detection badge, and upgraded Wikimedia Commons import filtering (`wikimediaService.js`).

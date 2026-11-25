@@ -1,4 +1,7 @@
+import { useLanguage } from '../lib/i18n.js';
+
 export default function SupabaseSetupModal({ open, onClose }) {
+  const { t } = useLanguage();
   if (!open) return null;
 
   return (
@@ -16,8 +19,8 @@ export default function SupabaseSetupModal({ open, onClose }) {
       >
         <div className="popup-header">
           <div>
-            <span className="gallery-pill">Supabase Setup</span>
-            <h2 id="supabase-setup-title">Connect Live Backend</h2>
+            <span className="gallery-pill">{t('setup.pill')}</span>
+            <h2 id="supabase-setup-title">{t('setup.title')}</h2>
           </div>
           <button
             type="button"
@@ -63,7 +66,7 @@ values ('YOUR_AUTH_USER_UUID', 'admin@example.com', 'superadmin');`}
 
         <div className="popup-footer">
           <button type="button" className="tts-btn" onClick={onClose}>
-            Got it
+            {t('setup.gotIt')}
           </button>
         </div>
       </section>

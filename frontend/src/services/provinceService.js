@@ -5,31 +5,46 @@ import { isSupabaseConfigured, supabase } from '../lib/supabase.js';
 export const DEMO_PROVINCES_KEY = 'indonesiaku_demo_provinces';
 export const DEMO_PHOTOS_KEY = 'indonesiaku_demo_photos';
 
-export function buildDefaultDescription(p) {
-  const area = Number(p.area_km2 || 0).toLocaleString('en-US');
-  const pop = Number(p.population || 0).toLocaleString('en-US');
+export function buildDefaultDescription(p, lang = 'en') {
+  const isId = String(lang || 'en').toLowerCase().startsWith('id');
+  const locale = isId ? 'id-ID' : 'en-US';
+  const area = Number(p.area_km2 || 0).toLocaleString(locale);
+  const pop = Number(p.population || 0).toLocaleString(locale);
   const density =
     Number(p.area_km2) > 0
-      ? (Number(p.population || 0) / Number(p.area_km2)).toLocaleString('en-US', {
+      ? (Number(p.population || 0) / Number(p.area_km2)).toLocaleString(locale, {
           maximumFractionDigits: 1,
         })
       : '0';
+
+  if (isId) {
+    const islandLabel =
+      p.island === 'Sumatra' ? 'Sumatera' : p.island === 'Java' ? 'Jawa' : p.island;
+    return `${p.name} adalah provinsi di Indonesia yang terletak di wilayah ${islandLabel}, dengan ibu kota ${p.capital}. Provinsi ini memiliki luas wilayah sekitar ${area} kilometer persegi dan jumlah penduduk diperkirakan mencapai ${pop} jiwa, dengan kepadatan sekitar ${density} jiwa per kilometer persegi.`;
+  }
 
   return `${p.name} is an Indonesian province in the ${p.island} region, with ${p.capital} as its capital city. It covers ${area} square kilometers and has an estimated population of ${pop} residents, with a density of about ${density} people per square kilometer.`;
 }
 
 export function readDemoProvinces() {
+  const defaultById = new Map(defaultProvinces.map((p) => [p.id, p]));
   try {
     const raw = localStorage.getItem(DEMO_PROVINCES_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) return parsed;
+      if (Array.isArray(parsed)) {
+        return parsed.map((p) => ({
+          ...p,
+          description_id: p.description_id || defaultById.get(p.id)?.description_id || '',
+        }));
+      }
     }
   } catch {
     // Fall back to bundled seed data if localStorage is corrupted.
   }
   const seeded = defaultProvinces.map((p) => ({
     ...p,
+    description_id: p.description_id || '',
     audio_url: p.audio_url || null,
     video_url: p.video_url || null,
   }));

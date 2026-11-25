@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   CircleMarker,
@@ -9,6 +9,7 @@ import {
   Tooltip,
   useMap,
 } from 'react-leaflet';
+import { useLanguage } from '../lib/i18n.js';
 import {
   GEOJSON_TO_ISLAND,
   GEOJSON_TO_PRIMARY_PROVINCE,
@@ -153,6 +154,7 @@ export default function MapView({
   theme = 'light',
   onToggleTheme,
 }) {
+  const { lang, setLang, t, translateIsland } = useLanguage();
   const [isMoving, setIsMoving] = useState(false);
   const isDark = theme === 'dark';
   const isCartoon = theme === 'cartoon';
@@ -200,7 +202,7 @@ export default function MapView({
     };
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const targetName = selectedProvince
       ? PROVINCE_TO_GEOJSON[selectedProvince.id] || selectedProvince.name.toUpperCase()
       : null;
@@ -299,7 +301,7 @@ export default function MapView({
           <div className="map-move-loader-badge">
             <div className="map-spinner map-spinner-sm" aria-hidden="true" />
           </div>
-          <p className="map-loading-text">Loading IndonesiaKu...</p>
+          <p className="map-loading-text">{t('map.loading')}</p>
         </div>
       ) : (
         <>
@@ -379,8 +381,10 @@ export default function MapView({
                 <Tooltip direction="top" offset={[0, -4]} opacity={0.98} className="map-tooltip">
                   <strong>{province.capital}</strong>
                   <div className="tooltip-sub">
-                    Capital of {province.name}
-                    {province.video_url ? ' · ▶ Watch video' : ' · Click for video'}
+                    {t('map.capitalOf', { name: province.name })}
+                    {province.video_url
+                      ? ` · ▶ ${t('map.watchVideo')}`
+                      : ` · ${t('map.clickForVideo')}`}
                   </div>
                 </Tooltip>
               </CircleMarker>
@@ -398,7 +402,27 @@ export default function MapView({
       </MapContainer>
 
       <div className="map-overlay-controls">
-        <Link to="/admin" className="admin-nav-btn" title="Open Admin CMS">
+        <div className="lang-toggle" role="group" aria-label={t('lang.label')}>
+          <button
+            type="button"
+            className={`lang-toggle-btn ${lang === 'en' ? 'active' : ''}`}
+            onClick={() => setLang('en')}
+            aria-pressed={lang === 'en'}
+            title={t('lang.switchToEn')}
+          >
+            EN
+          </button>
+          <button
+            type="button"
+            className={`lang-toggle-btn ${lang === 'id' ? 'active' : ''}`}
+            onClick={() => setLang('id')}
+            aria-pressed={lang === 'id'}
+            title={t('lang.switchToId')}
+          >
+            ID
+          </button>
+        </div>
+        <Link to="/admin" className="admin-nav-btn" title={t('map.openAdminTitle')}>
           <svg
             width="14"
             height="14"
@@ -413,7 +437,7 @@ export default function MapView({
             <path d="M12 20h9" />
             <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
           </svg>
-          <span>Admin</span>
+          <span>{t('map.admin')}</span>
         </Link>
         <button
           type="button"
@@ -421,17 +445,17 @@ export default function MapView({
           onClick={onToggleTheme}
           aria-label={
             theme === 'light'
-              ? 'Switch to dark theme'
+              ? t('map.switchToDark')
               : theme === 'dark'
-                ? 'Switch to cartoon theme'
-                : 'Switch to light theme'
+                ? t('map.switchToCartoon')
+                : t('map.switchToLight')
           }
           title={
             theme === 'light'
-              ? 'Switch to dark theme'
+              ? t('map.switchToDark')
               : theme === 'dark'
-                ? 'Switch to cartoon theme'
-                : 'Switch to light theme'
+                ? t('map.switchToCartoon')
+                : t('map.switchToLight')
           }
         >
           {theme === 'cartoon' ? (
@@ -509,29 +533,29 @@ export default function MapView({
             <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
             <path d="M3 3v5h5" />
           </svg>
-          <span>Reset All</span>
+          <span>{t('map.resetAll')}</span>
         </button>
       </div>
 
       <div className="map-hero">
         <span className="hero-pill">🇮🇩 IndonesiaKu</span>
         <span className="map-hero-title">
-          Explore <span className="text-brand-gradient">Indonesia</span>
+          {t('map.heroExplore')} <span className="text-brand-gradient">Indonesia</span>
         </span>
-        <span className="map-hero-sub">{provinces.length} provinces</span>
+        <span className="map-hero-sub">{t('map.heroProvinces', { count: provinces.length })}</span>
       </div>
 
       <div className="map-legend">
-        <div className="legend-title">Island groups</div>
+        <div className="legend-title">{t('map.legendTitle')}</div>
         <div className="legend-items">
           {Object.entries(islandColors).map(([island, color]) => (
             <div key={island} className="legend-item">
               <span className="legend-dot" style={{ backgroundColor: color }} />
-              <span>{island}</span>
+              <span>{translateIsland(island)}</span>
             </div>
           ))}
         </div>
-            <div className="legend-note">Circle size ≈ population</div>
+            <div className="legend-note">{t('map.legendNote')}</div>
           </div>
 
           {resetting && (
@@ -539,7 +563,7 @@ export default function MapView({
               <div className="map-move-loader-badge">
                 <div className="map-spinner map-spinner-sm" aria-hidden="true" />
               </div>
-              <p className="map-loading-text">Resetting map...</p>
+              <p className="map-loading-text">{t('map.resetting')}</p>
             </div>
           )}
 
@@ -548,7 +572,7 @@ export default function MapView({
               className="map-move-loader"
               role="status"
               aria-live="polite"
-              aria-label="Updating map view"
+              aria-label={t('map.updatingView')}
             >
               <div className="map-move-loader-badge">
                 <div className="map-spinner map-spinner-sm" aria-hidden="true" />

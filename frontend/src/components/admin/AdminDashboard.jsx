@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useLanguage } from '../../lib/i18n.js';
 import { ISLAND_COLORS, ISLAND_LIST } from '../../lib/geoMappings.js';
 import { isSupabaseConfigured } from '../../lib/supabase.js';
 import {
@@ -14,6 +15,7 @@ import { parseVideoSource } from '../../utils/videoUrl.js';
 import GalleryManager from './GalleryManager.jsx';
 
 export default function AdminDashboard({ onOpenSetup }) {
+  const { t, translateIsland } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
   const [provinces, setProvinces] = useState([]);
   const [loadingList, setLoadingList] = useState(true);
@@ -24,7 +26,7 @@ export default function AdminDashboard({ onOpenSetup }) {
 
   const [formState, setFormState] = useState(null);
   const [savingProvince, setSavingProvince] = useState(false);
-  const [isTestingTts, setIsTestingTts] = useState(false);
+  const [testingTtsLang, setTestingTtsLang] = useState(null);
 
   const [photos, setPhotos] = useState([]);
   const [loadingPhotos, setLoadingPhotos] = useState(false);
@@ -85,6 +87,7 @@ export default function AdminDashboard({ onOpenSetup }) {
       audio_url: selectedProvince.audio_url || '',
       video_url: selectedProvince.video_url || '',
       description: selectedProvince.description || '',
+      description_id: selectedProvince.description_id || '',
     });
 
     let cancelled = false;
@@ -139,6 +142,7 @@ export default function AdminDashboard({ onOpenSetup }) {
         audio_url: formState.audio_url,
         video_url: formState.video_url,
         description: formState.description,
+        description_id: formState.description_id,
       });
       setProvinces((prev) =>
         prev
@@ -147,7 +151,7 @@ export default function AdminDashboard({ onOpenSetup }) {
           )
           .sort((a, b) => a.name.localeCompare(b.name))
       );
-      notify('success', `Saved changes for ${updated.name}.`);
+      notify('success', t('admin.savedToast', { name: updated.name }));
     } catch (err) {
       notify('error', err.message || 'Failed to save province.');
     } finally {
@@ -161,28 +165,32 @@ export default function AdminDashboard({ onOpenSetup }) {
     };
   }, []);
 
-  const handleTestTts = () => {
+  const handleTestTts = (targetLang = 'en') => {
     if (!isTtsSupported()) {
-      notify('error', 'Browser speechSynthesis is unavailable.');
+      notify('error', t('admin.ttsUnavailable'));
       return;
     }
-    if (isTestingTts) {
+    if (testingTtsLang === targetLang) {
       stopSpeech();
-      setIsTestingTts(false);
+      setTestingTtsLang(null);
       return;
     }
-    const text = formState?.description?.trim() || buildDefaultDescription(selectedProvince);
-    setIsTestingTts(true);
+    const text =
+      targetLang === 'id'
+        ? formState?.description_id?.trim() || buildDefaultDescription(selectedProvince, 'id')
+        : formState?.description?.trim() || buildDefaultDescription(selectedProvince, 'en');
+    setTestingTtsLang(targetLang);
     speakTextHd(text, {
-      onStart: () => setIsTestingTts(true),
-      onEnd: () => setIsTestingTts(false),
-      onError: () => setIsTestingTts(false),
+      lang: targetLang,
+      onStart: () => setTestingTtsLang(targetLang),
+      onEnd: () => setTestingTtsLang(null),
+      onError: () => setTestingTtsLang(null),
     });
   };
 
   const handleResetDemo = () => {
     resetDemoData();
-    notify('info', 'Demo data reset to default 38 provinces.');
+    notify('info', t('admin.resetDemoToast'));
     loadProvinces();
   };
 
@@ -216,16 +224,16 @@ export default function AdminDashboard({ onOpenSetup }) {
       {!isSupabaseConfigured && (
         <div className="admin-demo-banner">
           <div>
-            <strong>Demo Mode Active</strong> — Edits and gallery photos are persisted in{' '}
-            <code>localStorage</code> and reflect immediately on the public map. Connect your
-            Supabase project in <code>frontend/.env</code> for live PostgreSQL &amp; Storage.
+            <strong>{t('admin.demoTitle')}</strong> — {t('admin.demoDescPre')}{' '}
+            <code>localStorage</code> {t('admin.demoDescMid')} <code>frontend/.env</code>{' '}
+            {t('admin.demoDescPost')}
           </div>
           <div className="admin-demo-actions">
             <button type="button" className="admin-btn admin-btn-secondary admin-btn-sm" onClick={onOpenSetup}>
-              Supabase Setup Guide
+              {t('admin.setupGuideBtn')}
             </button>
             <button type="button" className="admin-btn admin-btn-ghost admin-btn-sm" onClick={handleResetDemo}>
-              Reset Demo Data
+              {t('admin.resetDemoBtn')}
             </button>
           </div>
         </div>
@@ -243,7 +251,7 @@ export default function AdminDashboard({ onOpenSetup }) {
       <section className="admin-kpi-grid" aria-label="Database summary">
         <div className="admin-kpi-card admin-kpi-card--coral">
           <div className="admin-kpi-head">
-            <span className="admin-kpi-label">Total Provinces</span>
+            <span className="admin-kpi-label">{t('admin.kpiTotalProvinces')}</span>
             <span className="admin-kpi-icon" aria-hidden="true">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
@@ -252,12 +260,12 @@ export default function AdminDashboard({ onOpenSetup }) {
             </span>
           </div>
           <div className="admin-kpi-value">{kpis.totalProvinces}</div>
-          <div className="admin-kpi-meta">Indonesian archipelago</div>
+          <div className="admin-kpi-meta">{t('admin.kpiArchipelago')}</div>
         </div>
 
         <div className="admin-kpi-card admin-kpi-card--emerald">
           <div className="admin-kpi-head">
-            <span className="admin-kpi-label">Provinces with Photos</span>
+            <span className="admin-kpi-label">{t('admin.kpiWithPhotos')}</span>
             <span className="admin-kpi-icon" aria-hidden="true">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
@@ -266,7 +274,7 @@ export default function AdminDashboard({ onOpenSetup }) {
             </span>
           </div>
           <div className="admin-kpi-value">{kpis.withPhotos}</div>
-          <div className="admin-kpi-meta">{kpis.coveragePct}% gallery coverage</div>
+          <div className="admin-kpi-meta">{t('admin.kpiCoverage', { pct: kpis.coveragePct })}</div>
           <div className="admin-kpi-bar" aria-hidden="true">
             <span style={{ width: `${kpis.coveragePct}%` }} />
           </div>
@@ -274,7 +282,7 @@ export default function AdminDashboard({ onOpenSetup }) {
 
         <div className="admin-kpi-card admin-kpi-card--sky">
           <div className="admin-kpi-head">
-            <span className="admin-kpi-label">Total Gallery Photos</span>
+            <span className="admin-kpi-label">{t('admin.kpiTotalPhotos')}</span>
             <span className="admin-kpi-icon" aria-hidden="true">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
@@ -284,12 +292,12 @@ export default function AdminDashboard({ onOpenSetup }) {
             </span>
           </div>
           <div className="admin-kpi-value">{kpis.totalPhotos}</div>
-          <div className="admin-kpi-meta">Avg {kpis.avgPhotos} photos / province</div>
+          <div className="admin-kpi-meta">{t('admin.kpiAvgPhotos', { avg: kpis.avgPhotos })}</div>
         </div>
 
         <div className="admin-kpi-card admin-kpi-card--violet">
           <div className="admin-kpi-head">
-            <span className="admin-kpi-label">Island Groups</span>
+            <span className="admin-kpi-label">{t('admin.kpiIslandGroups')}</span>
             <span className="admin-kpi-icon" aria-hidden="true">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="12 2 2 7 12 12 22 7 12 2" />
@@ -299,7 +307,7 @@ export default function AdminDashboard({ onOpenSetup }) {
             </span>
           </div>
           <div className="admin-kpi-value">{kpis.islandGroups}</div>
-          <div className="admin-kpi-meta">Major island regions</div>
+          <div className="admin-kpi-meta">{t('admin.kpiMajorRegions')}</div>
         </div>
       </section>
 
@@ -307,24 +315,24 @@ export default function AdminDashboard({ onOpenSetup }) {
         <aside className="admin-list-panel">
           <div className="admin-list-controls">
             <div className="admin-list-top">
-              <h2>Provinces</h2>
+              <h2>{t('admin.provincesHeading')}</h2>
             </div>
             <input
               type="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Filter name, capital, slug..."
-              aria-label="Filter provinces"
+              placeholder={t('admin.filterPlaceholder')}
+              aria-label={t('admin.filterAria')}
             />
             <select
               value={islandFilter}
               onChange={(e) => setIslandFilter(e.target.value)}
-              aria-label="Filter by island group"
+              aria-label={t('admin.filterIslandAria')}
             >
-              <option value="">All Island Groups</option>
+              <option value="">{t('admin.allIslandsOption')}</option>
               {ISLAND_LIST.map((isl) => (
                 <option key={isl} value={isl}>
-                  {isl}
+                  {translateIsland(isl)}
                 </option>
               ))}
             </select>
@@ -332,9 +340,9 @@ export default function AdminDashboard({ onOpenSetup }) {
 
           <ul className="admin-province-list">
             {loadingList ? (
-              <li className="admin-list-empty">Loading provinces...</li>
+              <li className="admin-list-empty">{t('admin.loadingProvinces')}</li>
             ) : filteredProvinces.length === 0 ? (
-              <li className="admin-list-empty">No matching provinces.</li>
+              <li className="admin-list-empty">{t('admin.noMatchingProvinces')}</li>
             ) : (
               filteredProvinces.map((prov) => {
                 const active = prov.id === selectedId;
@@ -364,7 +372,7 @@ export default function AdminDashboard({ onOpenSetup }) {
 
         <section className="admin-editor-panel">
           {!selectedProvince || !formState ? (
-            <div className="admin-empty-box">Select a province from the left to maintain it.</div>
+            <div className="admin-empty-box">{t('admin.selectPrompt')}</div>
           ) : (
             <>
               <header className="admin-editor-header">
@@ -373,11 +381,11 @@ export default function AdminDashboard({ onOpenSetup }) {
                     className="detail-island-tag"
                     style={{ backgroundColor: ISLAND_COLORS[selectedProvince.island] || '#E56A4A' }}
                   >
-                    {selectedProvince.island}
+                    {translateIsland(selectedProvince.island)}
                   </span>
                   <h2>{selectedProvince.name}</h2>
                   <p className="admin-muted">
-                    Slug ID: <code>{selectedProvince.id}</code>
+                    {t('admin.slugId')} <code>{selectedProvince.id}</code>
                   </p>
                 </div>
               </header>
@@ -390,7 +398,7 @@ export default function AdminDashboard({ onOpenSetup }) {
                   className={`admin-tab ${activeTab === 'details' ? 'active' : ''}`}
                   onClick={() => setActiveTab('details')}
                 >
-                  Details &amp; Description
+                  {t('admin.tabDetails')}
                 </button>
                 <button
                   type="button"
@@ -399,7 +407,7 @@ export default function AdminDashboard({ onOpenSetup }) {
                   className={`admin-tab ${activeTab === 'gallery' ? 'active' : ''}`}
                   onClick={() => setActiveTab('gallery')}
                 >
-                  Photo Gallery ({photos.length})
+                  {t('admin.tabGallery', { count: photos.length })}
                 </button>
               </div>
 
@@ -407,7 +415,7 @@ export default function AdminDashboard({ onOpenSetup }) {
                 <form onSubmit={handleSaveProvince} className="admin-details-form">
                   <div className="admin-form-grid">
                     <label className="admin-field">
-                      <span>Province Name</span>
+                      <span>{t('admin.fieldName')}</span>
                       <input
                         type="text"
                         required
@@ -418,7 +426,7 @@ export default function AdminDashboard({ onOpenSetup }) {
                       />
                     </label>
                     <label className="admin-field">
-                      <span>Capital City</span>
+                      <span>{t('admin.fieldCapital')}</span>
                       <input
                         type="text"
                         required
@@ -429,7 +437,7 @@ export default function AdminDashboard({ onOpenSetup }) {
                       />
                     </label>
                     <label className="admin-field">
-                      <span>Island Group</span>
+                      <span>{t('admin.fieldIsland')}</span>
                       <select
                         value={formState.island}
                         onChange={(e) =>
@@ -438,13 +446,13 @@ export default function AdminDashboard({ onOpenSetup }) {
                       >
                         {ISLAND_LIST.map((isl) => (
                           <option key={isl} value={isl}>
-                            {isl}
+                            {translateIsland(isl)}
                           </option>
                         ))}
                       </select>
                     </label>
                     <label className="admin-field">
-                      <span>Population</span>
+                      <span>{t('admin.fieldPopulation')}</span>
                       <input
                         type="number"
                         min="0"
@@ -456,7 +464,7 @@ export default function AdminDashboard({ onOpenSetup }) {
                       />
                     </label>
                     <label className="admin-field">
-                      <span>Area (km²)</span>
+                      <span>{t('admin.fieldArea')}</span>
                       <input
                         type="number"
                         min="0"
@@ -468,18 +476,18 @@ export default function AdminDashboard({ onOpenSetup }) {
                       />
                     </label>
                     <label className="admin-field">
-                      <span>Custom Audio URL (optional)</span>
+                      <span>{t('admin.fieldAudioUrl')}</span>
                       <input
                         type="url"
                         value={formState.audio_url}
                         onChange={(e) =>
                           setFormState((s) => ({ ...s, audio_url: e.target.value }))
                         }
-                        placeholder="https://... (uses browser TTS if blank)"
+                        placeholder={t('admin.fieldAudioPlaceholder')}
                       />
                     </label>
                     <label className="admin-field">
-                      <span>Capital Latitude</span>
+                      <span>{t('admin.fieldLat')}</span>
                       <input
                         type="number"
                         step="any"
@@ -491,7 +499,7 @@ export default function AdminDashboard({ onOpenSetup }) {
                       />
                     </label>
                     <label className="admin-field">
-                      <span>Capital Longitude</span>
+                      <span>{t('admin.fieldLng')}</span>
                       <input
                         type="number"
                         step="any"
@@ -504,7 +512,7 @@ export default function AdminDashboard({ onOpenSetup }) {
                     </label>
                     <div className="admin-field admin-field-full">
                       <div className="admin-field-header">
-                        <span>Capital Video URL (1 video per capital)</span>
+                        <span>{t('admin.fieldVideoUrl')}</span>
                         {formState.video_url && (
                           <button
                             type="button"
@@ -513,7 +521,7 @@ export default function AdminDashboard({ onOpenSetup }) {
                               setFormState((s) => ({ ...s, video_url: '' }))
                             }
                           >
-                            Clear
+                            {t('admin.clearBtn')}
                           </button>
                         )}
                       </div>
@@ -524,29 +532,29 @@ export default function AdminDashboard({ onOpenSetup }) {
                           setFormState((s) => ({ ...s, video_url: e.target.value }))
                         }
                         placeholder="https://www.youtube.com/watch?v=... or https://.../video.mp4"
-                        aria-label="Capital Video URL"
+                        aria-label={t('admin.fieldVideoUrl')}
                       />
                       {(() => {
                         const preview = parseVideoSource(formState.video_url);
                         if (preview.kind === 'empty') {
                           return (
                             <div className="admin-video-hint">
-                              <span>
-                                Supports YouTube, Vimeo, Google Drive, or direct MP4/WebM links.
-                              </span>
+                              <span>{t('admin.videoHintDefault')}</span>
                             </div>
                           );
                         }
                         if (preview.kind === 'invalid') {
                           return (
                             <div className="admin-video-hint admin-video-hint-error">
-                              <span>Enter a valid http:// or https:// video URL.</span>
+                              <span>{t('admin.videoHintInvalid')}</span>
                             </div>
                           );
                         }
                         return (
                           <div className="admin-video-hint">
-                            <span>Detected player: {preview.provider}</span>
+                            <span>
+                              {t('admin.videoHintDetected', { provider: preview.provider })}
+                            </span>
                           </div>
                         );
                       })()}
@@ -556,7 +564,7 @@ export default function AdminDashboard({ onOpenSetup }) {
                   <div className="admin-field">
                     <div className="admin-field-header">
                       <span>
-                        Description ({formState.description.length} chars)
+                        {t('admin.descEnLabel', { count: formState.description.length })}
                       </span>
                       <div className="admin-field-tools">
                         <button
@@ -565,34 +573,83 @@ export default function AdminDashboard({ onOpenSetup }) {
                           onClick={() =>
                             setFormState((s) => ({
                               ...s,
-                              description: buildDefaultDescription({
-                                name: s.name,
-                                capital: s.capital,
-                                island: s.island,
-                                area_km2: Number(s.area_km2),
-                                population: Number(s.population),
-                              }),
+                              description: buildDefaultDescription(
+                                {
+                                  name: s.name,
+                                  capital: s.capital,
+                                  island: s.island,
+                                  area_km2: Number(s.area_km2),
+                                  population: Number(s.population),
+                                },
+                                'en'
+                              ),
                             }))
                           }
                         >
-                          Generate Default Summary
+                          {t('admin.generateDefault')}
                         </button>
                         <button
                           type="button"
                           className="admin-link-btn"
-                          onClick={handleTestTts}
+                          onClick={() => handleTestTts('en')}
                         >
-                          {isTestingTts ? 'Stop TTS' : 'Test TTS Voice'}
+                          {testingTtsLang === 'en' ? t('admin.stopTts') : t('admin.testTtsEn')}
                         </button>
                       </div>
                     </div>
                     <textarea
-                      rows={6}
+                      rows={5}
                       value={formState.description}
                       onChange={(e) =>
                         setFormState((s) => ({ ...s, description: e.target.value }))
                       }
-                      placeholder="Write a rich description for this province..."
+                      placeholder={t('admin.descPlaceholder')}
+                    />
+                  </div>
+
+                  <div className="admin-field">
+                    <div className="admin-field-header">
+                      <span>
+                        {t('admin.descIdLabel', { count: formState.description_id.length })}
+                      </span>
+                      <div className="admin-field-tools">
+                        <button
+                          type="button"
+                          className="admin-link-btn"
+                          onClick={() =>
+                            setFormState((s) => ({
+                              ...s,
+                              description_id: buildDefaultDescription(
+                                {
+                                  name: s.name,
+                                  capital: s.capital,
+                                  island: s.island,
+                                  area_km2: Number(s.area_km2),
+                                  population: Number(s.population),
+                                },
+                                'id'
+                              ),
+                            }))
+                          }
+                        >
+                          {t('admin.generateDefault')}
+                        </button>
+                        <button
+                          type="button"
+                          className="admin-link-btn"
+                          onClick={() => handleTestTts('id')}
+                        >
+                          {testingTtsLang === 'id' ? t('admin.stopTts') : t('admin.testTtsId')}
+                        </button>
+                      </div>
+                    </div>
+                    <textarea
+                      rows={5}
+                      value={formState.description_id}
+                      onChange={(e) =>
+                        setFormState((s) => ({ ...s, description_id: e.target.value }))
+                      }
+                      placeholder={t('admin.descIdPlaceholder')}
                     />
                   </div>
 
@@ -602,7 +659,7 @@ export default function AdminDashboard({ onOpenSetup }) {
                       className="admin-btn admin-btn-primary"
                       disabled={savingProvince}
                     >
-                      {savingProvince ? 'Saving...' : 'Save Province Details'}
+                      {savingProvince ? t('admin.saving') : t('admin.saveBtn')}
                     </button>
                   </div>
                 </form>
