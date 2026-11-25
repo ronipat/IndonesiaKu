@@ -10,6 +10,9 @@ An interactive full-stack web application exploring all **38 provinces of Indone
 ### Interactive Map — Dark Theme (Bahasa Indonesia)
 ![IndonesiaKu Map — Dark Theme & Bahasa Indonesia](docs/screenshots/map-dark-id.png)
 
+### Interactive Map — Left Sidebar Menu
+![IndonesiaKu Map — Left Sidebar Menu](docs/screenshots/map-sidebar.jpg)
+
 ### Interactive Map — Cartoon Theme
 ![IndonesiaKu Map — Cartoon Theme](docs/screenshots/map-cartoon.png)
 
@@ -20,7 +23,7 @@ An interactive full-stack web application exploring all **38 provinces of Indone
 ![Capital Video Player Popup](docs/screenshots/capital-video-popup.png)
 
 ### Admin CMS (`/admin`)
-![IndonesiaKu Admin CMS](docs/screenshots/admin-page.png)
+![IndonesiaKu Admin CMS](docs/screenshots/admin-page.jpg)
 
 ## Features
 
@@ -41,10 +44,11 @@ IndonesiaKu/
     screenshots/
       map-light.png
       map-dark-id.png
+      map-sidebar.jpg
       map-cartoon.png
       province-popup-gallery.png
       capital-video-popup.png
-      admin-page.png
+      admin-page.jpg
   scripts/
     seed-descriptions.mjs
     curate-scenic-photos.mjs
