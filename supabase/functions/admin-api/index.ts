@@ -1,12 +1,23 @@
 import { createClient, type SupabaseClient, type User } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': 'Authorization, Content-Type, apikey, x-client-info',
-};
+const DEFAULT_ALLOWED_ORIGINS = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:5174',
+  'http://127.0.0.1:5174',
+  'http://localhost:5175',
+  'http://127.0.0.1:5175',
+];
 
 const BUCKET_NAME = 'province-gallery';
+const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+const PROVINCE_SLUG_RE = /^[a-z0-9-]+$/;
+const ALLOWED_IMAGE_MIME_TYPES = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+]);
 
 const EXCLUDED_PHOTO_KEYWORDS = [
   'flag_of',
@@ -22,25 +33,69 @@ const EXCLUDED_PHOTO_KEYWORDS = [
   'icon',
 ];
 
-function jsonResponse(payload: unknown, status = 200): Response {
+function getAllowedOrigins(): Set<string> {
+  const raw = String(Deno.env.get('ALLOWED_ORIGINS') || '').trim();
+  if (!raw) {
+    return new Set(DEFAULT_ALLOWED_ORIGINS);
+  }
+  const configured = raw
+    .split(',')
+    .map((origin) => origin.trim().replace(/\/+$/, ''))
+    .filter(Boolean);
+  return new Set(configured.length > 0 ? configured : DEFAULT_ALLOWED_ORIGINS);
+}
+
+function buildCorsHeaders(req: Request): Record<string, string> {
+  const reqOrigin = (req.headers.get('Origin') || '').replace(/\/+$/, '');
+  const allowed = getAllowedOrigins();
+  const headers: Record<string, string> = {
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Authorization, Content-Type, apikey, x-client-info',
+    Vary: 'Origin',
+  };
+  if (reqOrigin && allowed.has(reqOrigin)) {
+    headers['Access-Control-Allow-Origin'] = reqOrigin;
+  }
+  return headers;
+}
+
+function jsonResponse(req: Request, payload: unknown, status = 200): Response {
   return new Response(JSON.stringify(payload), {
     status,
     headers: {
-      ...CORS_HEADERS,
+      ...buildCorsHeaders(req),
       'Content-Type': 'application/json; charset=utf-8',
     },
   });
 }
 
-function errorResponse(message: string, status = 400): Response {
-  return jsonResponse({ error: message }, status);
+function errorResponse(req: Request, message: string, status = 400): Response {
+  return jsonResponse(req, { error: message }, status);
+}
+
+function validateHttpUrl(raw: unknown, label: string, required = false): string | null {
+  const cleaned = String(raw ?? '').trim();
+  if (!cleaned) {
+    if (required) throw new Error(`${label} is required`);
+    return null;
+  }
+  let parsed: URL;
+  try {
+    parsed = new URL(cleaned);
+  } catch {
+    throw new Error(`${label} must be a valid http:// or https:// URL`);
+  }
+  if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+    throw new Error(`${label} must start with http:// or https://`);
+  }
+  return cleaned;
 }
 
 function getServiceClient(): SupabaseClient {
   const url = Deno.env.get('SUPABASE_URL');
   const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
   if (!url || !serviceKey) {
-    throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables');
+    throw new Error('Server configuration error');
   }
   return createClient(url, serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
@@ -54,16 +109,16 @@ async function requireAdmin(
   const authHeader = req.headers.get('Authorization') || '';
   const match = authHeader.match(/^Bearer\s+(.+)$/i);
   if (!match) {
-    return errorResponse('Missing Bearer authorization token', 401);
+    return errorResponse(req, 'Missing Bearer authorization token', 401);
   }
   const token = match[1].trim();
   if (!token) {
-    return errorResponse('Empty Bearer authorization token', 401);
+    return errorResponse(req, 'Empty Bearer authorization token', 401);
   }
 
   const { data: userData, error: authError } = await serviceClient.auth.getUser(token);
   if (authError || !userData?.user) {
-    return errorResponse('Invalid or expired session token', 401);
+    return errorResponse(req, 'Invalid or expired session token', 401);
   }
 
   const { data: adminRow, error: adminError } = await serviceClient
@@ -73,10 +128,11 @@ async function requireAdmin(
     .maybeSingle();
 
   if (adminError) {
-    return errorResponse(`Failed to verify admin membership: ${adminError.message}`, 500);
+    console.error('Failed to verify admin membership:', adminError.message);
+    return errorResponse(req, 'Failed to verify admin membership', 500);
   }
   if (!adminRow) {
-    return errorResponse('Forbidden: user is not registered in admin_users', 403);
+    return errorResponse(req, 'Forbidden: user is not authorized as admin', 403);
   }
 
   return { user: userData.user, role: adminRow.role };
@@ -137,7 +193,7 @@ async function queryWikimediaPhotos(
     imageinfo?: Array<{ url?: string; thumburl?: string; mime?: string }>;
   }>) {
     const info = page.imageinfo?.[0];
-    if (!info || !info.mime?.startsWith('image/') || info.mime === 'image/svg+xml') {
+    if (!info || info.mime !== 'image/jpeg') {
       continue;
     }
     const title = page.title || '';
@@ -158,7 +214,7 @@ async function queryWikimediaPhotos(
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: CORS_HEADERS });
+    return new Response(null, { status: 204, headers: buildCorsHeaders(req) });
   }
 
   const url = new URL(req.url);
@@ -166,14 +222,15 @@ Deno.serve(async (req: Request) => {
   const method = req.method.toUpperCase();
 
   if (method === 'GET' && path === '/health') {
-    return jsonResponse({ status: 'ok', service: 'indonesiaku-admin-api' });
+    return jsonResponse(req, { status: 'ok', service: 'indonesiaku-admin-api' });
   }
 
   let serviceClient: SupabaseClient;
   try {
     serviceClient = getServiceClient();
   } catch (err) {
-    return errorResponse((err as Error).message, 500);
+    console.error('Service client init error:', (err as Error).message);
+    return errorResponse(req, 'Internal server configuration error', 500);
   }
 
   const authResult = await requireAdmin(req, serviceClient);
@@ -184,7 +241,7 @@ Deno.serve(async (req: Request) => {
   try {
     // GET /me
     if (method === 'GET' && path === '/me') {
-      return jsonResponse({
+      return jsonResponse(req, {
         user: { id: authResult.user.id, email: authResult.user.email },
         role: authResult.role,
       });
@@ -197,7 +254,10 @@ Deno.serve(async (req: Request) => {
         .select('*, province_photos(count)')
         .order('name', { ascending: true });
 
-      if (error) return errorResponse(error.message, 500);
+      if (error) {
+        console.error('GET /provinces failed:', error.message);
+        return errorResponse(req, 'Failed to list provinces', 500);
+      }
 
       const formatted = (data || []).map((row) => {
         const countArr = (row as { province_photos?: Array<{ count: number }> }).province_photos;
@@ -205,7 +265,7 @@ Deno.serve(async (req: Request) => {
         const { province_photos: _omit, ...rest } = row as Record<string, unknown>;
         return { ...rest, photo_count: photoCount };
       });
-      return jsonResponse(formatted);
+      return jsonResponse(req, formatted);
     }
 
     // POST /provinces
@@ -221,14 +281,21 @@ Deno.serve(async (req: Request) => {
       const population = Math.max(0, Math.round(Number(body.population || 0)));
       const description = String(body.description || '').trim();
       const descriptionId = body.description_id ? String(body.description_id).trim() : null;
-      const audioUrl = body.audio_url ? String(body.audio_url).trim() : null;
-      const videoUrl = body.video_url ? String(body.video_url).trim() : null;
 
-      if (!id || !name || !capital || !island) {
-        return errorResponse('id, name, capital, and island are required', 400);
+      let audioUrl: string | null = null;
+      let videoUrl: string | null = null;
+      try {
+        audioUrl = validateHttpUrl(body.audio_url, 'audio_url', false);
+        videoUrl = validateHttpUrl(body.video_url, 'video_url', false);
+      } catch (err) {
+        return errorResponse(req, (err as Error).message, 400);
+      }
+
+      if (!id || !PROVINCE_SLUG_RE.test(id) || !name || !capital || !island) {
+        return errorResponse(req, 'Valid id, name, capital, and island are required', 400);
       }
       if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-        return errorResponse('Valid numeric lat and lng are required', 400);
+        return errorResponse(req, 'Valid numeric lat and lng are required', 400);
       }
 
       const { data, error } = await serviceClient
@@ -250,23 +317,33 @@ Deno.serve(async (req: Request) => {
         .select('*')
         .single();
 
-      if (error) return errorResponse(error.message, 400);
-      return jsonResponse({ ...data, photo_count: 0 }, 201);
+      if (error) {
+        console.error('POST /provinces failed:', error.message);
+        return errorResponse(req, 'Failed to create province', 400);
+      }
+      return jsonResponse(req, { ...data, photo_count: 0 }, 201);
     }
 
     // Match /provinces/:id/photos/upload
     const uploadMatch = path.match(/^\/provinces\/([^/]+)\/photos\/upload$/);
     if (method === 'POST' && uploadMatch) {
       const provinceId = decodeURIComponent(uploadMatch[1]);
+      if (!PROVINCE_SLUG_RE.test(provinceId)) {
+        return errorResponse(req, 'Invalid province ID', 400);
+      }
+
       const formData = await req.formData();
       const file = formData.get('file');
       const caption = String(formData.get('caption') || '').trim();
 
       if (!(file instanceof File)) {
-        return errorResponse('Multipart form field "file" is required', 400);
+        return errorResponse(req, 'Multipart form field "file" is required', 400);
       }
-      if (!file.type.startsWith('image/')) {
-        return errorResponse('Only image files are allowed', 400);
+      if (!ALLOWED_IMAGE_MIME_TYPES.has(file.type)) {
+        return errorResponse(req, 'Only JPEG, PNG, WebP, and GIF images are allowed', 400);
+      }
+      if (file.size <= 0 || file.size > MAX_UPLOAD_BYTES) {
+        return errorResponse(req, 'Image file must be between 1 byte and 10 MB', 400);
       }
 
       const safeName = sanitizeFilename(file.name);
@@ -279,7 +356,10 @@ Deno.serve(async (req: Request) => {
           contentType: file.type,
           upsert: false,
         });
-      if (uploadError) return errorResponse(uploadError.message, 400);
+      if (uploadError) {
+        console.error('Storage upload failed:', uploadError.message);
+        return errorResponse(req, 'Failed to upload image to storage', 400);
+      }
 
       const { data: pub } = serviceClient.storage.from(BUCKET_NAME).getPublicUrl(storagePath);
 
@@ -306,15 +386,20 @@ Deno.serve(async (req: Request) => {
 
       if (insertError) {
         await serviceClient.storage.from(BUCKET_NAME).remove([storagePath]);
-        return errorResponse(insertError.message, 400);
+        console.error('Insert uploaded photo row failed:', insertError.message);
+        return errorResponse(req, 'Failed to save uploaded photo record', 400);
       }
-      return jsonResponse(inserted, 201);
+      return jsonResponse(req, inserted, 201);
     }
 
     // Match /provinces/:id/photos/import-wikimedia
     const importMatch = path.match(/^\/provinces\/([^/]+)\/photos\/import-wikimedia$/);
     if (method === 'POST' && importMatch) {
       const provinceId = decodeURIComponent(importMatch[1]);
+      if (!PROVINCE_SLUG_RE.test(provinceId)) {
+        return errorResponse(req, 'Invalid province ID', 400);
+      }
+
       const { data: province, error: provError } = await serviceClient
         .from('provinces')
         .select('id, name, capital')
@@ -322,12 +407,12 @@ Deno.serve(async (req: Request) => {
         .single();
 
       if (provError || !province) {
-        return errorResponse('Province not found', 404);
+        return errorResponse(req, 'Province not found', 404);
       }
 
-      let candidates = await queryWikimediaPhotos(`${province.name} Indonesia`);
+      let candidates = await queryWikimediaPhotos(`${province.name} landmark OR landscape`);
       if (candidates.length < 3 && province.capital) {
-        const capCandidates = await queryWikimediaPhotos(`${province.capital} Indonesia`);
+        const capCandidates = await queryWikimediaPhotos(`${province.capital} tourism`);
         const seenUrls = new Set(candidates.map((c) => c.url));
         for (const item of capCandidates) {
           if (!seenUrls.has(item.url)) {
@@ -343,7 +428,10 @@ Deno.serve(async (req: Request) => {
         .select('url, sort_order')
         .eq('province_id', provinceId);
 
-      if (existErr) return errorResponse(existErr.message, 500);
+      if (existErr) {
+        console.error('Fetch existing photos failed:', existErr.message);
+        return errorResponse(req, 'Failed to inspect existing gallery', 500);
+      }
 
       const existingUrls = new Set((existingPhotos || []).map((p) => p.url));
       let nextOrder = (existingPhotos || []).reduce(
@@ -362,7 +450,7 @@ Deno.serve(async (req: Request) => {
         }));
 
       if (toInsert.length === 0) {
-        return jsonResponse({ added: [], message: 'No new Wikimedia photos to add' });
+        return jsonResponse(req, { added: [], message: 'No new Wikimedia photos to add' });
       }
 
       const { data: inserted, error: insertError } = await serviceClient
@@ -370,14 +458,21 @@ Deno.serve(async (req: Request) => {
         .insert(toInsert)
         .select('*');
 
-      if (insertError) return errorResponse(insertError.message, 400);
-      return jsonResponse({ added: inserted || [] }, 201);
+      if (insertError) {
+        console.error('Insert Wikimedia photos failed:', insertError.message);
+        return errorResponse(req, 'Failed to save imported photos', 400);
+      }
+      return jsonResponse(req, { added: inserted || [] }, 201);
     }
 
     // Match /provinces/:id/photos/reorder
     const reorderMatch = path.match(/^\/provinces\/([^/]+)\/photos\/reorder$/);
     if (method === 'PUT' && reorderMatch) {
       const provinceId = decodeURIComponent(reorderMatch[1]);
+      if (!PROVINCE_SLUG_RE.test(provinceId)) {
+        return errorResponse(req, 'Invalid province ID', 400);
+      }
+
       const body = await req.json();
       const photoIds = Array.isArray(body.photoIds) ? body.photoIds.map(String) : [];
 
@@ -387,7 +482,10 @@ Deno.serve(async (req: Request) => {
           .update({ sort_order: i })
           .eq('id', photoIds[i])
           .eq('province_id', provinceId);
-        if (error) return errorResponse(error.message, 400);
+        if (error) {
+          console.error('Reorder photo failed:', error.message);
+          return errorResponse(req, 'Failed to reorder photos', 400);
+        }
       }
 
       const { data: updated, error: listErr } = await serviceClient
@@ -397,14 +495,21 @@ Deno.serve(async (req: Request) => {
         .order('sort_order', { ascending: true })
         .order('created_at', { ascending: true });
 
-      if (listErr) return errorResponse(listErr.message, 500);
-      return jsonResponse(updated || []);
+      if (listErr) {
+        console.error('List reordered photos failed:', listErr.message);
+        return errorResponse(req, 'Failed to reload photos', 500);
+      }
+      return jsonResponse(req, updated || []);
     }
 
     // Match /provinces/:id/photos
     const photosMatch = path.match(/^\/provinces\/([^/]+)\/photos$/);
     if (photosMatch) {
       const provinceId = decodeURIComponent(photosMatch[1]);
+      if (!PROVINCE_SLUG_RE.test(provinceId)) {
+        return errorResponse(req, 'Invalid province ID', 400);
+      }
+
       if (method === 'GET') {
         const { data, error } = await serviceClient
           .from('province_photos')
@@ -412,15 +517,22 @@ Deno.serve(async (req: Request) => {
           .eq('province_id', provinceId)
           .order('sort_order', { ascending: true })
           .order('created_at', { ascending: true });
-        if (error) return errorResponse(error.message, 500);
-        return jsonResponse(data || []);
+        if (error) {
+          console.error('GET province photos failed:', error.message);
+          return errorResponse(req, 'Failed to load gallery photos', 500);
+        }
+        return jsonResponse(req, data || []);
       }
 
       if (method === 'POST') {
         const body = await req.json();
-        const photoUrl = String(body.url || '').trim();
         const caption = String(body.caption || '').trim();
-        if (!photoUrl) return errorResponse('url is required', 400);
+        let photoUrl: string | null = null;
+        try {
+          photoUrl = validateHttpUrl(body.url, 'url', true);
+        } catch (err) {
+          return errorResponse(req, (err as Error).message, 400);
+        }
 
         let sortOrder = Number.isFinite(Number(body.sort_order)) ? Number(body.sort_order) : null;
         if (sortOrder === null) {
@@ -445,8 +557,11 @@ Deno.serve(async (req: Request) => {
           .select('*')
           .single();
 
-        if (error) return errorResponse(error.message, 400);
-        return jsonResponse(data, 201);
+        if (error) {
+          console.error('POST photo URL failed:', error.message);
+          return errorResponse(req, 'Failed to add photo', 400);
+        }
+        return jsonResponse(req, data, 201);
       }
     }
 
@@ -454,6 +569,9 @@ Deno.serve(async (req: Request) => {
     const provMatch = path.match(/^\/provinces\/([^/]+)$/);
     if (provMatch) {
       const provinceId = decodeURIComponent(provMatch[1]);
+      if (!PROVINCE_SLUG_RE.test(provinceId)) {
+        return errorResponse(req, 'Invalid province ID', 400);
+      }
 
       if (method === 'PATCH') {
         const body = await req.json();
@@ -473,11 +591,15 @@ Deno.serve(async (req: Request) => {
         if (body.description_id !== undefined) {
           updates.description_id = body.description_id ? String(body.description_id) : null;
         }
-        if (body.audio_url !== undefined) {
-          updates.audio_url = body.audio_url ? String(body.audio_url).trim() : null;
-        }
-        if (body.video_url !== undefined) {
-          updates.video_url = body.video_url ? String(body.video_url).trim() : null;
+        try {
+          if (body.audio_url !== undefined) {
+            updates.audio_url = validateHttpUrl(body.audio_url, 'audio_url', false);
+          }
+          if (body.video_url !== undefined) {
+            updates.video_url = validateHttpUrl(body.video_url, 'video_url', false);
+          }
+        } catch (err) {
+          return errorResponse(req, (err as Error).message, 400);
         }
 
         const { data, error } = await serviceClient
@@ -487,8 +609,11 @@ Deno.serve(async (req: Request) => {
           .select('*')
           .single();
 
-        if (error) return errorResponse(error.message, 400);
-        return jsonResponse(data);
+        if (error) {
+          console.error('PATCH province failed:', error.message);
+          return errorResponse(req, 'Failed to update province', 400);
+        }
+        return jsonResponse(req, data);
       }
 
       if (method === 'DELETE') {
@@ -506,8 +631,11 @@ Deno.serve(async (req: Request) => {
         }
 
         const { error } = await serviceClient.from('provinces').delete().eq('id', provinceId);
-        if (error) return errorResponse(error.message, 400);
-        return jsonResponse({ deleted: provinceId });
+        if (error) {
+          console.error('DELETE province failed:', error.message);
+          return errorResponse(req, 'Failed to delete province', 400);
+        }
+        return jsonResponse(req, { deleted: provinceId });
       }
     }
 
@@ -520,7 +648,13 @@ Deno.serve(async (req: Request) => {
         const body = await req.json();
         const updates: Record<string, unknown> = {};
         if (body.caption !== undefined) updates.caption = String(body.caption);
-        if (body.url !== undefined) updates.url = String(body.url).trim();
+        if (body.url !== undefined) {
+          try {
+            updates.url = validateHttpUrl(body.url, 'url', true);
+          } catch (err) {
+            return errorResponse(req, (err as Error).message, 400);
+          }
+        }
         if (body.sort_order !== undefined) updates.sort_order = Number(body.sort_order);
 
         const { data, error } = await serviceClient
@@ -530,8 +664,11 @@ Deno.serve(async (req: Request) => {
           .select('*')
           .single();
 
-        if (error) return errorResponse(error.message, 400);
-        return jsonResponse(data);
+        if (error) {
+          console.error('PATCH photo failed:', error.message);
+          return errorResponse(req, 'Failed to update photo', 400);
+        }
+        return jsonResponse(req, data);
       }
 
       if (method === 'DELETE') {
@@ -541,26 +678,33 @@ Deno.serve(async (req: Request) => {
           .eq('id', photoId)
           .maybeSingle();
 
-        if (fetchErr) return errorResponse(fetchErr.message, 500);
-        if (!existing) return errorResponse('Photo not found', 404);
+        if (fetchErr) {
+          console.error('Fetch photo for delete failed:', fetchErr.message);
+          return errorResponse(req, 'Failed to look up photo', 500);
+        }
+        if (!existing) return errorResponse(req, 'Photo not found', 404);
 
         const { error: delErr } = await serviceClient
           .from('province_photos')
           .delete()
           .eq('id', photoId);
 
-        if (delErr) return errorResponse(delErr.message, 400);
+        if (delErr) {
+          console.error('DELETE photo failed:', delErr.message);
+          return errorResponse(req, 'Failed to delete photo', 400);
+        }
 
         if (existing.storage_path) {
           await serviceClient.storage.from(BUCKET_NAME).remove([existing.storage_path]);
         }
 
-        return jsonResponse({ deleted: photoId });
+        return jsonResponse(req, { deleted: photoId });
       }
     }
 
-    return errorResponse(`Route not found: ${method} ${path}`, 404);
+    return errorResponse(req, `Route not found: ${method} ${path}`, 404);
   } catch (err) {
-    return errorResponse((err as Error).message || 'Internal server error', 500);
+    console.error('Unhandled admin-api error:', (err as Error).message);
+    return errorResponse(req, 'Internal server error', 500);
   }
 });

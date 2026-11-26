@@ -98,8 +98,11 @@ function summarizeIslands(provinces) {
   });
 }
 
-function escapePostgrestLike(term) {
-  return term.replace(/[,()%_\\]/g, (ch) => `\\${ch}`);
+function sanitizeSearchTerm(term) {
+  return String(term || '')
+    .replace(/[,().%_*\\"']/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 export async function checkHealth() {
@@ -146,8 +149,10 @@ export async function getProvinces({ island = '', q = '' } = {}) {
     query = query.eq('island', trimmedIsland);
   }
   if (trimmedQuery) {
-    const safe = escapePostgrestLike(trimmedQuery);
-    query = query.or(`name.ilike.%${safe}%,capital.ilike.%${safe}%`);
+    const safe = sanitizeSearchTerm(trimmedQuery);
+    if (safe) {
+      query = query.or(`name.ilike.%${safe}%,capital.ilike.%${safe}%`);
+    }
   }
 
   const { data, error } = await query;

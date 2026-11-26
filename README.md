@@ -61,6 +61,7 @@ IndonesiaKu/
       20261125000004_seed_province_photos.sql
       20261126000001_add_capital_video_url.sql
       20261126000002_add_description_id.sql
+      20261126000003_security_hardening.sql
     functions/
       admin-api/
         index.ts
@@ -69,7 +70,10 @@ IndonesiaKu/
     index.html
     package.json
     vite.config.js
+    vercel.json
     public/
+      _headers
+      theme-init.js
       icon.png
       data/
         indonesia-provinces.geojson
@@ -114,7 +118,7 @@ IndonesiaKu/
 Create a project at [supabase.com](https://supabase.com) and locate your **Project URL** and **anon public key** under **Project Settings → API**.
 
 ### 2. Run the SQL Migrations
-Run all 6 migrations in order via the **Supabase SQL Editor** (or push with the Supabase CLI using `supabase link` and `supabase db push`):
+Run all 7 migrations in order via the **Supabase SQL Editor** (or push with the Supabase CLI using `supabase link` and `supabase db push`):
 
 1. `supabase/migrations/20261125000001_initial_schema.sql` — creates `public.provinces`, `public.province_photos`, `public.admin_users`, `public.island_groups` view, `private.is_admin()` security helper, RLS policies, and the `province-gallery` Storage bucket.
 2. `supabase/migrations/20261125000002_seed_provinces.sql` — idempotently seeds all 38 provinces of Indonesia across 7 island groups.
@@ -122,6 +126,7 @@ Run all 6 migrations in order via the **Supabase SQL Editor** (or push with the 
 4. `supabase/migrations/20261125000004_seed_province_photos.sql` — idempotently seeds 156 curated scenic landscape Wikimedia/Wikipedia photos across all 38 provinces (minimum 3 per province).
 5. `supabase/migrations/20261126000001_add_capital_video_url.sql` — adds the nullable `video_url text` column to `public.provinces` for capital video playback.
 6. `supabase/migrations/20261126000002_add_description_id.sql` — adds `description_id text` to `public.provinces` and seeds Bahasa Indonesia descriptions for all 38 provinces.
+7. `supabase/migrations/20261126000003_security_hardening.sql` — revokes `anon` access to `private` schema/helpers, restricts province insert/delete policies to `superadmin` (`private.is_superadmin()`), and adds `http(s)://` URL check constraints.
 
 ### 3. Create an Admin Account
 1. In **Supabase Dashboard → Authentication → Users**, create a user (email + password) and copy their User UID.
@@ -189,3 +194,7 @@ This outputs static assets to `frontend/dist/`. Since IndonesiaKu uses client-si
   - Polished header branding (`IndonesiaKu` without gap or orange square) and decoupled `Admin` pill badge.
   - Compact 4-card KPI summary grid with accent bars, SVG icons, and live photo coverage meter, plus equal-height province list & editor panels.
   - Added **Description — Bahasa Indonesia** editor with **Test Voice (ID)** preview, **Capital Video URL** input with live provider detection badge, and upgraded Wikimedia Commons import filtering (`wikimediaService.js`).
+- **Security Hardening**:
+  - Sanitized PostgREST `.or()` search queries (`sanitizeSearchTerm`), enforced strict `http(s)://` URL validation across audio, video, and photo inputs, restricted image uploads to JPEG/PNG/WebP/GIF (`<= 10 MB`, blocking SVG), and gated dev-only admin SQL setup hints behind `import.meta.env.DEV`.
+  - Externalized pre-paint theme script into `public/theme-init.js` and added strict CSP, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, and `Permissions-Policy` headers in `public/_headers` and `vercel.json`.
+  - Hardened `admin-api` Edge Function (allowlisted CORS, pre-buffer upload size & slug checks, sanitized error messages), disabled self-signup in `supabase/config.toml`, and added `20261126000003_security_hardening.sql` (revoked `anon` `private` schema access, restricted province insert/delete to `superadmin`, added URL `CHECK` constraints).

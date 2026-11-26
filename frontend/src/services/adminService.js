@@ -18,6 +18,34 @@ import { cleanPhotoCaption, fetchWikimediaCandidates } from './wikimediaService.
 
 const BUCKET_NAME = 'province-gallery';
 const MAX_DEMO_IMAGE_BYTES = 2 * 1024 * 1024;
+const MAX_LIVE_IMAGE_BYTES = 10 * 1024 * 1024;
+const ALLOWED_IMAGE_MIME_TYPES = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+]);
+const DATA_IMAGE_URL_RE = /^data:image\/(jpeg|png|webp|gif);base64,[a-z0-9+/=]+$/i;
+
+function assertHttpUrl(raw, label, { required = false } = {}) {
+  const cleaned = String(raw || '').trim();
+  if (!cleaned) {
+    if (required) {
+      throw new Error(`${label} is required`);
+    }
+    return null;
+  }
+  let parsed;
+  try {
+    parsed = new URL(cleaned);
+  } catch {
+    throw new Error(`${label} must be a valid http:// or https:// URL`);
+  }
+  if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+    throw new Error(`${label} must start with http:// or https://`);
+  }
+  return cleaned;
+}
 
 function sanitizeFilename(name) {
   const base = String(name || 'photo.jpg').split(/[\\/]/).pop() || 'photo.jpg';
@@ -188,8 +216,8 @@ export async function updateProvince(id, payload) {
     population: Math.max(0, Math.round(Number(payload.population || 0))),
     description: String(payload.description || ''),
     description_id: String(payload.description_id || ''),
-    audio_url: payload.audio_url ? String(payload.audio_url).trim() : null,
-    video_url: payload.video_url ? String(payload.video_url).trim() : null,
+    audio_url: assertHttpUrl(payload.audio_url, 'Audio URL'),
+    video_url: assertHttpUrl(payload.video_url, 'Video URL'),
   };
 
   if (!updates.name || !updates.capital || !updates.island) {
@@ -262,12 +290,16 @@ export async function listProvincePhotos(provinceId) {
   return data || [];
 }
 
-export async function addProvincePhotoByUrl(provinceId, { url, caption = '' }) {
-  const cleanUrl = String(url || '').trim();
+export async function addProvincePhotoByUrl(
+  provinceId,
+  { url, caption = '', allowDataImage = false }
+) {
+  const rawUrl = String(url || '').trim();
+  const isAllowedDataImage = allowDataImage && DATA_IMAGE_URL_RE.test(rawUrl);
+  const cleanUrl = isAllowedDataImage
+    ? rawUrl
+    : assertHttpUrl(rawUrl, 'Image URL', { required: true });
   const cleanCaption = String(caption || '').trim();
-  if (!cleanUrl) {
-    throw new Error('Image URL is required');
-  }
 
   if (!isSupabaseConfigured) {
     const map = readDemoPhotosMap();
@@ -326,8 +358,8 @@ export async function uploadProvincePhoto(provinceId, file, caption = '') {
   if (!file) {
     throw new Error('Select an image file to upload');
   }
-  if (!file.type.startsWith('image/')) {
-    throw new Error('Only image files (JPEG, PNG, WebP, GIF) are supported');
+  if (!ALLOWED_IMAGE_MIME_TYPES.has(file.type)) {
+    throw new Error('Only JPEG, PNG, WebP, and GIF images are supported');
   }
 
   const safeName = sanitizeFilename(file.name);
@@ -341,7 +373,12 @@ export async function uploadProvincePhoto(provinceId, file, caption = '') {
     return addProvincePhotoByUrl(provinceId, {
       url: dataUrl,
       caption: resolvedCaption,
+      allowDataImage: true,
     });
+  }
+
+  if (file.size > MAX_LIVE_IMAGE_BYTES) {
+    throw new Error('Image file exceeds the 10 MB upload limit');
   }
 
   if (useAdminEdgeFunction) {
@@ -400,7 +437,7 @@ export async function uploadProvincePhoto(provinceId, file, caption = '') {
 export async function updateProvincePhoto(photoId, { caption, url, sort_order }) {
   const updates = {};
   if (caption !== undefined) updates.caption = String(caption);
-  if (url !== undefined) updates.url = String(url).trim();
+  if (url !== undefined) updates.url = assertHttpUrl(url, 'Image URL', { required: true });
   if (sort_order !== undefined) updates.sort_order = Number(sort_order);
 
   if (!isSupabaseConfigured) {

@@ -159,6 +159,7 @@ export default function CapitalVideoPopup({ province, islandColor, onClose }) {
             src={parsed.src}
             title={`${province.capital} video`}
             className="video-player-iframe"
+            referrerPolicy="strict-origin-when-cross-origin"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
             allowFullScreen
           />

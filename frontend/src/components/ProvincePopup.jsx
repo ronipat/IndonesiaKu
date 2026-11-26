@@ -134,6 +134,15 @@ function ProvinceMiniMap({ province, geojson, islandColor }) {
   );
 }
 
+function isSafeHttpUrl(rawUrl) {
+  try {
+    const parsed = new URL(String(rawUrl || '').trim());
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 function getProvinceDescription(province, lang) {
   if (lang === 'id') {
     if (province.description_id && province.description_id.trim()) {
@@ -196,7 +205,7 @@ export default function ProvincePopup({ province, geojson, islandColor, onClose 
       const text = getProvinceDescription(targetProvince, targetLang);
       const customAudioUrl = targetProvince.audio_url?.trim();
 
-      if (targetLang === 'id' || !customAudioUrl) {
+      if (targetLang === 'id' || !customAudioUrl || !isSafeHttpUrl(customAudioUrl)) {
         speakFallback(text, targetLang);
         return;
       }

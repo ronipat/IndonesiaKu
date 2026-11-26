@@ -31,6 +31,7 @@ export default function AdminLogin({
   };
 
   if (sessionState?.user && !sessionState?.isAdmin) {
+    const isDev = import.meta.env.DEV;
     const sqlSnippet = `insert into public.admin_users (user_id, email, role)\nvalues ('${sessionState.user.id}', '${sessionState.user.email || ''}', 'superadmin');`;
 
     const handleCopy = async () => {
@@ -48,19 +49,30 @@ export default function AdminLogin({
         <section className="admin-auth-card">
           <span className="gallery-pill">{t('login.accessRequired')}</span>
           <h2>{t('login.notAuthorizedTitle')}</h2>
-          <p className="admin-auth-sub">
-            {t('login.signedInAs')} <strong>{sessionState.user.email}</strong> (UID:{' '}
-            <code>{sessionState.user.id}</code>), {t('login.notListed')}{' '}
-            <code>public.admin_users</code> {t('login.yet')}
-          </p>
+          {isDev ? (
+            <>
+              <p className="admin-auth-sub">
+                {t('login.signedInAs')} <strong>{sessionState.user.email}</strong> (UID:{' '}
+                <code>{sessionState.user.id}</code>), {t('login.notListed')}{' '}
+                <code>public.admin_users</code> {t('login.yet')}
+              </p>
 
-          <p className="admin-auth-sub">{t('login.runSql')}</p>
-          <pre className="setup-code">{sqlSnippet}</pre>
+              <p className="admin-auth-sub">{t('login.runSql')}</p>
+              <pre className="setup-code">{sqlSnippet}</pre>
+            </>
+          ) : (
+            <p className="admin-auth-sub">
+              {t('login.signedInAs')} <strong>{sessionState.user.email}</strong>.{' '}
+              {t('login.notAuthorizedProd')}
+            </p>
+          )}
 
           <div className="admin-auth-actions">
-            <button type="button" className="admin-btn admin-btn-secondary" onClick={handleCopy}>
-              {copied ? t('login.copiedSql') : t('login.copySql')}
-            </button>
+            {isDev && (
+              <button type="button" className="admin-btn admin-btn-secondary" onClick={handleCopy}>
+                {copied ? t('login.copiedSql') : t('login.copySql')}
+              </button>
+            )}
             <button type="button" className="admin-btn admin-btn-primary" onClick={onRecheck}>
               {t('login.recheckAccess')}
             </button>

@@ -119,9 +119,16 @@ export default function GalleryManager({
     setUrlCaption('');
   }, [province?.id]);
 
+const ALLOWED_IMAGE_TYPES = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+]);
+
   const handleFilePick = (file) => {
     if (!file) return;
-    if (!file.type.startsWith('image/')) {
+    if (!ALLOWED_IMAGE_TYPES.has(file.type)) {
       notify('error', 'Please select a valid image file (JPEG, PNG, WebP, GIF).');
       return;
     }
@@ -275,7 +282,7 @@ export default function GalleryManager({
             <input
               ref={fileInputRef}
               type="file"
-              accept="image/*"
+              accept="image/jpeg,image/png,image/webp,image/gif"
               className="admin-file-hidden"
               onChange={(e) => handleFilePick(e.target.files?.[0])}
             />
@@ -334,7 +341,7 @@ export default function GalleryManager({
               </button>
             </div>
           </div>
-          {urlInput.trim() && (
+          {/^https?:\/\//i.test(urlInput.trim()) && (
             <div className="admin-url-preview">
               <img src={urlInput.trim()} alt="URL preview" />
             </div>
